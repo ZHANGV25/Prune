@@ -30,29 +30,16 @@ struct HouseAdView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(
-                colors: [Color.blue.opacity(0.8), Color.purple.opacity(0.8)],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            
-            VStack(spacing: 24) {
-                Image(systemName: "star.fill")
-                    .font(.system(size: 80))
-                    .foregroundColor(.yellow)
-                    .shadow(radius: 10)
-                
-                VStack(spacing: 8) {
-                    Text("Enjoying Prune?")
-                        .font(.largeTitle)
-                        .fontWeight(.heavy)
-                        .foregroundColor(.white)
             Color(UIColor.secondarySystemBackground)
-            VStack {
+            
+            VStack(spacing: 16) {
                  Text("Prune Pro")
                     .font(.largeTitle)
                     .bold()
+                 
                  Text("Support development & Remove Ads")
+                    .foregroundColor(.secondary)
+                 
                  Button("Upgrade") {
                      onDismiss()
                  }
