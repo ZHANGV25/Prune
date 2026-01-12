@@ -1,0 +1,398 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Prune/Prune.xcodeproj -scheme Prune -destination generic/platform=iOS build
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  RevenueCat: https://github.com/RevenueCat/purchases-ios-spm.git @ 5.54.0
+  GoogleUserMessagingPlatform: https://github.com/googleads/swift-package-manager-google-user-messaging-platform.git @ 3.1.0
+  GoogleMobileAds: https://github.com/googleads/swift-package-manager-google-mobile-ads.git @ 12.14.0
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (11 targets)
+    Target 'Prune' in project 'Prune'
+        ➜ Explicit dependency on target 'GoogleMobileAds' in project 'GoogleMobileAds'
+        ➜ Explicit dependency on target 'RevenueCatUI' in project 'RevenueCat'
+        ➜ Explicit dependency on target 'RevenueCat' in project 'RevenueCat'
+    Target 'RevenueCat' in project 'RevenueCat'
+        ➜ Explicit dependency on target 'RevenueCat' in project 'RevenueCat'
+        ➜ Explicit dependency on target 'RevenueCat_RevenueCat' in project 'RevenueCat'
+    Target 'RevenueCatUI' in project 'RevenueCat'
+        ➜ Explicit dependency on target 'RevenueCatUI' in project 'RevenueCat'
+        ➜ Explicit dependency on target 'RevenueCat_RevenueCatUI' in project 'RevenueCat'
+        ➜ Explicit dependency on target 'RevenueCat' in project 'RevenueCat'
+    Target 'RevenueCatUI' in project 'RevenueCat'
+        ➜ Explicit dependency on target 'RevenueCat_RevenueCatUI' in project 'RevenueCat'
+        ➜ Explicit dependency on target 'RevenueCat' in project 'RevenueCat'
+    Target 'RevenueCat' in project 'RevenueCat'
+        ➜ Explicit dependency on target 'RevenueCat_RevenueCat' in project 'RevenueCat'
+    Target 'RevenueCat_RevenueCat' in project 'RevenueCat' (no dependencies)
+    Target 'RevenueCat_RevenueCatUI' in project 'RevenueCat' (no dependencies)
+    Target 'GoogleMobileAds' in project 'GoogleMobileAds'
+        ➜ Explicit dependency on target 'GoogleMobileAdsTarget' in project 'GoogleMobileAds'
+        ➜ Explicit dependency on target 'GoogleUserMessagingPlatform' in project 'GoogleUserMessagingPlatform'
+    Target 'GoogleMobileAdsTarget' in project 'GoogleMobileAds'
+        ➜ Explicit dependency on target 'GoogleUserMessagingPlatform' in project 'GoogleUserMessagingPlatform'
+    Target 'GoogleUserMessagingPlatform' in project 'GoogleUserMessagingPlatform'
+        ➜ Explicit dependency on target 'UserMessagingPlatformTarget' in project 'GoogleUserMessagingPlatform'
+    Target 'UserMessagingPlatformTarget' in project 'GoogleUserMessagingPlatform' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.1.sdk -x objective-c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.1.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.1.sdk -x c -c /dev/null
+
+ReadFileContents /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/docc/features.json
+
+Build description signature: 43ce26d734e13a1c0a9146708723ffe4
+Build description path: /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/XCBuildData/43ce26d734e13a1c0a9146708723ffe4.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.1.sdk /Users/victor/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphoneos26.1-23B77-69b33fc7382b27d9b5d46e82a00f8e78.sdkstatcache
+    cd /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.1.sdk -o /Users/victor/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphoneos26.1-23B77-69b33fc7382b27d9b5d46e82a00f8e78.sdkstatcache
+
+ProcessInfoPlistFile /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/RevenueCat_RevenueCat.bundle/Info.plist /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat_RevenueCat.build/empty-RevenueCat_RevenueCat.plist (in target 'RevenueCat_RevenueCat' from project 'RevenueCat')
+    cd /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/SourcePackages/checkouts/purchases-ios-spm
+    builtin-infoPlistUtility /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat_RevenueCat.build/empty-RevenueCat_RevenueCat.plist -producttype com.apple.product-type.bundle -expandbuildsettings -format binary -platform iphoneos -requiredArchitecture arm64 -o /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/RevenueCat_RevenueCat.bundle/Info.plist
+
+ProcessInfoPlistFile /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/RevenueCat_RevenueCatUI.bundle/Info.plist /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat_RevenueCatUI.build/empty-RevenueCat_RevenueCatUI.plist (in target 'RevenueCat_RevenueCatUI' from project 'RevenueCat')
+    cd /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/SourcePackages/checkouts/purchases-ios-spm
+    builtin-infoPlistUtility /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat_RevenueCatUI.build/empty-RevenueCat_RevenueCatUI.plist -producttype com.apple.product-type.bundle -expandbuildsettings -format binary -platform iphoneos -additionalcontentfile /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat_RevenueCatUI.build/assetcatalog_generated_info.plist -requiredArchitecture arm64 -o /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/RevenueCat_RevenueCatUI.bundle/Info.plist
+
+SwiftDriver RevenueCatUI normal arm64 com.apple.xcode.tools.swift.compiler (in target 'RevenueCatUI' from project 'RevenueCat')
+    cd /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune.xcodeproj
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name RevenueCatUI -Onone -enforce-exclusivity\=checked @/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCatUI.build/Objects-normal/arm64/RevenueCatUI.SwiftFileList -DSWIFT_PACKAGE -DDEBUG -DSWIFT_MODULE_RESOURCE_BUNDLE_AVAILABLE -DXcode -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.1.sdk -target arm64-apple-ios13.0 -g -module-cache-path /Users/victor/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -suppress-warnings -index-store-path /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/lib -F /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/PackageFrameworks -F /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.1.sdk/Developer/Library/Frameworks -emit-localized-strings -emit-localized-strings-path /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCatUI.build/Objects-normal/arm64 -c -j8 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/victor/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphoneos26.1-23B77-69b33fc7382b27d9b5d46e82a00f8e78.sdkstatcache -output-file-map /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCatUI.build/Objects-normal/arm64/RevenueCatUI-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/victor/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/victor/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCatUI.build/Objects-normal/arm64/RevenueCatUI.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/victor/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -package-name purchases_ios_spm -Xcc -I/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCatUI.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCatUI.build/Objects-normal/arm64/RevenueCatUI_const_extract_protocols.json -Xcc -I/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/include -Xcc -I/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCatUI.build/DerivedSources-normal/arm64 -Xcc -I/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCatUI.build/DerivedSources/arm64 -Xcc -I/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCatUI.build/DerivedSources -Xcc -DSWIFT_PACKAGE -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCatUI.build/Objects-normal/arm64/RevenueCatUI-Swift.h -working-directory /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune.xcodeproj -experimental-emit-module-separately -disable-cmo
+
+ProcessProductPackaging "" /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Prune.app.xcent (in target 'Prune' from project 'Prune')
+    cd /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune
+    
+    Entitlements:
+    
+    {
+    "application-identifier" = "CAYXPWAU93.com.isotropicstudios.Prune";
+    "com.apple.developer.team-identifier" = CAYXPWAU93;
+    "get-task-allow" = 1;
+}
+    
+    builtin-productPackagingUtility -entitlements -format xml -o /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Prune.app.xcent
+
+ProcessProductPackagingDER /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Prune.app.xcent /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Prune.app.xcent.der (in target 'Prune' from project 'Prune')
+    cd /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune
+    /usr/bin/derq query -f xml -i /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Prune.app.xcent -o /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Prune.app.xcent.der --raw
+
+SwiftDriver Prune normal arm64 com.apple.xcode.tools.swift.compiler (in target 'Prune' from project 'Prune')
+    cd /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Prune -Onone -enforce-exclusivity\=checked @/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Objects-normal/arm64/Prune.SwiftFileList -DDEBUG -Xcc -fmodule-map-file\=/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/GeneratedModuleMaps-iphoneos/UserMessagingPlatformTarget.modulemap -default-isolation\=MainActor -enable-bare-slash-regex -enable-upcoming-feature DisableOutwardActorInference -enable-upcoming-feature InferSendableFromCaptures -enable-upcoming-feature GlobalActorIsolatedTypesUsability -enable-upcoming-feature MemberImportVisibility -enable-upcoming-feature InferIsolatedConformances -enable-upcoming-feature NonisolatedNonsendingByDefault -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.1.sdk -target arm64-apple-ios26.1 -g -module-cache-path /Users/victor/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos -F /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/PackageFrameworks -F /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/PackageFrameworks -F /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/PackageFrameworks -F /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/PackageFrameworks -F /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos -emit-localized-strings -emit-localized-strings-path /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Objects-normal/arm64 -c -j8 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/victor/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphoneos26.1-23B77-69b33fc7382b27d9b5d46e82a00f8e78.sdkstatcache -output-file-map /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Objects-normal/arm64/Prune-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/victor/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/victor/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Objects-normal/arm64/Prune.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/victor/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Objects-normal/arm64/Prune_const_extract_protocols.json -Xcc -iquote -Xcc /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Prune-generated-files.hmap -Xcc -I/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Prune-own-target-headers.hmap -Xcc -I/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Prune-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune-644fbb8f46d5598a6b6d0a16fd79c929-VFS-iphoneos/all-product-headers.yaml -Xcc -iquote -Xcc /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Prune-project-headers.hmap -Xcc -I/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/SourcePackages/checkouts/swift-package-manager-google-user-messaging-platform/UserMessagingPlatformTarget/include -Xcc -I/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/include -Xcc -I/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/DerivedSources-normal/arm64 -Xcc -I/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/DerivedSources/arm64 -Xcc -I/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Objects-normal/arm64/Prune-Swift.h -working-directory /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune -experimental-emit-module-separately -disable-cmo
+
+SwiftCompile normal arm64 Compiling\ PruneApp.swift,\ PruneModels.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/App/PruneApp.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Models/PruneModels.swift (in target 'Prune' from project 'Prune')
+SwiftCompile normal arm64 /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/App/PruneApp.swift (in target 'Prune' from project 'Prune')
+    cd /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune
+    
+
+SwiftCompile normal arm64 /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Models/PruneModels.swift (in target 'Prune' from project 'Prune')
+    cd /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune
+    
+
+SwiftCompile normal arm64 Compiling\ PhotoLibraryService.swift,\ PurchaseService.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Services/PhotoLibraryService.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Services/PurchaseService.swift (in target 'Prune' from project 'Prune')
+
+SwiftCompile normal arm64 /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Services/PhotoLibraryService.swift (in target 'Prune' from project 'Prune')
+    cd /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune
+    
+
+SwiftCompile normal arm64 /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Services/PurchaseService.swift (in target 'Prune' from project 'Prune')
+    cd /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune
+    
+
+SwiftCompile normal arm64 Compiling\ AdMobService.swift,\ AnalyticsService.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Services/AdMobService.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Services/AnalyticsService.swift (in target 'Prune' from project 'Prune')
+SwiftCompile normal arm64 /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Services/AdMobService.swift (in target 'Prune' from project 'Prune')
+    cd /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune
+    
+
+SwiftCompile normal arm64 /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Services/AnalyticsService.swift (in target 'Prune' from project 'Prune')
+    cd /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune
+    
+
+SwiftCompile normal arm64 Compiling\ SwipeDeckView.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Views/Swipe/SwipeDeckView.swift (in target 'Prune' from project 'Prune')
+
+SwiftCompile normal arm64 /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Views/Swipe/SwipeDeckView.swift (in target 'Prune' from project 'Prune')
+    cd /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune
+    
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ Prune (in target 'Prune' from project 'Prune')
+Failed frontend command:
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend -frontend -emit-module -experimental-skip-non-inlinable-function-bodies-without-types /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/App/PruneApp.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Models/PruneModels.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Services/AdMobService.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Services/AnalyticsService.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Services/PhotoLibraryService.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Services/PurchaseService.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/ViewModels/SwipeViewModel.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Views/Home/DateSelectionView.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Views/Home/HomeView.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Views/Paywall/PaywallView.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Views/Swipe/AdCard.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Views/Swipe/AssetInfoView.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Views/Swipe/SwipeDeckView.swift /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/DerivedSources/GeneratedAssetSymbols.swift -target arm64-apple-ios26.1 -module-can-import-version DeveloperToolsSupport 23.0.4 23.0.4 -module-can-import-version SwiftUI 7.1.13.1 7.1.13 -module-can-import-version UIKit 9126.1.12.1 9126.1.12 -disable-cross-import-overlay-search -swift-module-cross-import AVKit /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/AVKit.framework/Modules/AVKit.swiftcrossimport/SwiftUI.swiftoverlay -swift-module-cross-import AVKit /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.1.sdk/System/Library/Frameworks/AVKit.framework/Modules/AVKit.swiftcrossimport/SwiftUI.swiftoverlay -swift-module-cross-import StoreKit /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/StoreKit.framework/Modules/StoreKit.swiftcrossimport/SwiftUI.swiftoverlay -swift-module-cross-import StoreKit /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.1.sdk/System/Library/Frameworks/StoreKit.framework/Modules/StoreKit.swiftcrossimport/SwiftUI.swiftoverlay -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/lib/swift/host/plugins/libFoundationMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server\#FoundationMacros -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/lib/swift/host/plugins/libObservationMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server\#ObservationMacros -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/lib/swift/host/plugins/libPreviewsMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server\#PreviewsMacros -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/lib/swift/host/plugins/libSwiftMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server\#SwiftMacros -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/lib/swift/host/plugins/libSwiftUIMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server\#SwiftUIMacros -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/lib/swift/host/plugins/libTipKitMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server\#TipKitMacros -disable-implicit-swift-modules -Xcc -fno-implicit-modules -Xcc -fno-implicit-module-maps -explicit-swift-module-map-file /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Objects-normal/arm64/Prune-dependencies-1.json -Xllvm -aarch64-use-tbi -enable-objc-interop -stack-check -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.1.sdk -I /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos -F /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/PackageFrameworks -F /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/PackageFrameworks -F /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/PackageFrameworks -F /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/PackageFrameworks -F /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos -no-color-diagnostics -Xcc -fno-color-diagnostics -enable-testing -g -debug-info-format\=dwarf -dwarf-version\=5 -module-cache-path /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -swift-version 5 -enforce-exclusivity\=checked -Onone -D DEBUG -serialize-debugging-options -const-gather-protocols-file /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Objects-normal/arm64/Prune_const_extract_protocols.json -enable-upcoming-feature DisableOutwardActorInference -enable-upcoming-feature InferSendableFromCaptures -enable-upcoming-feature GlobalActorIsolatedTypesUsability -enable-upcoming-feature MemberImportVisibility -enable-upcoming-feature InferIsolatedConformances -enable-upcoming-feature NonisolatedNonsendingByDefault -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -default-isolation\=MainActor -empty-abi-descriptor -validate-clang-modules-once -clang-build-session-file /Users/victor/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -working-directory -Xcc /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune -enable-anonymous-context-mangled-names -file-compilation-dir /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune -Xcc -fmodule-map-file\=/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/GeneratedModuleMaps-iphoneos/UserMessagingPlatformTarget.modulemap -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -Xcc -ivfsstatcache -Xcc /Users/victor/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphoneos26.1-23B77-69b33fc7382b27d9b5d46e82a00f8e78.sdkstatcache -Xcc -I/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/swift-overrides.hmap -Xcc -iquote -Xcc /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Prune-generated-files.hmap -Xcc -I/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Prune-own-target-headers.hmap -Xcc -I/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Prune-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune-644fbb8f46d5598a6b6d0a16fd79c929-VFS-iphoneos/all-product-headers.yaml -Xcc -iquote -Xcc /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Prune-project-headers.hmap -Xcc -I/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/SourcePackages/checkouts/swift-package-manager-google-user-messaging-platform/UserMessagingPlatformTarget/include -Xcc -I/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/include -Xcc -I/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/DerivedSources-normal/arm64 -Xcc -I/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/DerivedSources/arm64 -Xcc -I/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/DerivedSources -Xcc -DDEBUG\=1 -no-auto-bridging-header-chaining -module-name Prune -frontend-parseable-output -disable-clang-spi -target-sdk-version 26.1 -target-sdk-name iphoneos26.1 -clang-target arm64-apple-ios26.1 -in-process-plugin-server-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/libSwiftInProcPluginServer.dylib -emit-module-doc-path /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Objects-normal/arm64/Prune.swiftdoc -emit-module-source-info-path /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Objects-normal/arm64/Prune.swiftsourceinfo -emit-objc-header-path /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Objects-normal/arm64/Prune-Swift.h -serialize-diagnostics-path /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Objects-normal/arm64/Prune-primary-emit-module.dia -emit-dependencies-path /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Objects-normal/arm64/Prune-primary-emit-module.d -o /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Objects-normal/arm64/Prune.swiftmodule -emit-abi-descriptor-path /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/Objects-normal/arm64/Prune.abi.json
+
+EmitSwiftModule normal arm64 (in target 'Prune' from project 'Prune')
+    cd /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune
+    
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Services/AdMobService.swift:8:27: error: 'GADAdLoader' has been renamed to 'AdLoader'
+    private var adLoader: GADAdLoader?
+                          ^~~~~~~~~~~
+                          AdLoader
+/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/GoogleMobileAds.framework/Headers/GADAdLoader.h:21:12: note: 'GADAdLoader' was obsoleted in Swift 3
+@interface GADAdLoader : NSObject
+           ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Services/AdMobService.swift:11:34: error: 'GADNativeAd' has been renamed to 'NativeAd'
+    @Published var nextNativeAd: GADNativeAd?
+                                 ^~~~~~~~~~~
+                                 NativeAd
+/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/GoogleMobileAds.framework/Headers/GADNativeAd.h:28:12: note: 'GADNativeAd' was obsoleted in Swift 3
+@interface GADNativeAd : NSObject
+           ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Services/AdMobService.swift:44:25: error: 'GADNativeAd' has been renamed to 'NativeAd'
+    func consumeAd() -> GADNativeAd? {
+                        ^~~~~~~~~~~
+                        NativeAd
+/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/GoogleMobileAds.framework/Headers/GADNativeAd.h:28:12: note: 'GADNativeAd' was obsoleted in Swift 3
+@interface GADNativeAd : NSObject
+           ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Services/AdMobService.swift:5:7: error: type 'AdMobService' does not conform to protocol 'ObservableObject'
+class AdMobService: NSObject, ObservableObject {
+      ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Services/AdMobService.swift:5:7: note: add stubs for conformance
+class AdMobService: NSObject, ObservableObject {
+      ^
+Combine.ObservableObject.objectWillChange:2:5: note: protocol requires property 'objectWillChange' with type 'Self.ObjectWillChangePublisher'
+var objectWillChange: Self.ObjectWillChangePublisher { get }}
+    ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Services/AdMobService.swift:53:31: error: 'GADAdLoader' has been renamed to 'AdLoader'
+    func adLoader(_ adLoader: GADAdLoader, didReceive nativeAd: GADNativeAd) {
+                              ^~~~~~~~~~~
+                              AdLoader
+/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/GoogleMobileAds.framework/Headers/GADAdLoader.h:21:12: note: 'GADAdLoader' was obsoleted in Swift 3
+@interface GADAdLoader : NSObject
+           ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Services/AdMobService.swift:53:65: error: 'GADNativeAd' has been renamed to 'NativeAd'
+    func adLoader(_ adLoader: GADAdLoader, didReceive nativeAd: GADNativeAd) {
+                                                                ^~~~~~~~~~~
+                                                                NativeAd
+/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/GoogleMobileAds.framework/Headers/GADNativeAd.h:28:12: note: 'GADNativeAd' was obsoleted in Swift 3
+@interface GADNativeAd : NSObject
+           ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Services/AdMobService.swift:58:31: error: 'GADAdLoader' has been renamed to 'AdLoader'
+    func adLoader(_ adLoader: GADAdLoader, didFailToReceiveAdWithError error: Error) {
+                              ^~~~~~~~~~~
+                              AdLoader
+/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/GoogleMobileAds.framework/Headers/GADAdLoader.h:21:12: note: 'GADAdLoader' was obsoleted in Swift 3
+@interface GADAdLoader : NSObject
+           ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Services/AdMobService.swift:52:25: error: 'GADNativeAdLoaderDelegate' has been renamed to 'NativeAdLoaderDelegate'
+extension AdMobService: GADNativeAdLoaderDelegate {
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~
+                        NativeAdLoaderDelegate
+/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/GoogleMobileAds.framework/Headers/GADNativeAd.h:116:11: note: 'GADNativeAdLoaderDelegate' was obsoleted in Swift 3
+@protocol GADNativeAdLoaderDelegate <GADAdLoaderDelegate>
+          ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Services/AdMobService.swift:11:6: error: initializer 'init(wrappedValue:)' is not available due to missing import of defining module 'Combine'
+    @Published var nextNativeAd: GADNativeAd?
+     ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Services/AdMobService.swift:4:1: note: add import of module 'Combine'
+
+^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Services/PurchaseService.swift:57:1: error: cannot declare conformance to 'NSObjectProtocol' in Swift; 'PurchaseService' should inherit 'NSObject' instead
+extension PurchaseService: PurchasesDelegate {
+^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Services/PurchaseService.swift:57:1: note: add stubs for conformance
+extension PurchaseService: PurchasesDelegate {
+^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:45:45: error: cannot find type 'AVPlayerItem' in scope
+    @Published var videoItemCache: [String: AVPlayerItem] = [:]
+                                            ^~~~~~~~~~~~
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:9:36: error: cannot find type 'AnyCancellable' in scope
+    private var cancellables = Set<AnyCancellable>()
+                                   ^~~~~~~~~~~~~~
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:18:20: error: cannot find type 'PHAsset' in scope
+        case photo(PHAsset)
+                   ^~~~~~~
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:19:37: error: 'GADNativeAd' has been renamed to 'NativeAd'
+        case ad(id: UUID, nativeAd: GADNativeAd?)
+                                    ^~~~~~~~~~~
+                                    NativeAd
+/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/GoogleMobileAds.framework/Headers/GADNativeAd.h:28:12: note: 'GADNativeAd' was obsoleted in Swift 3
+@interface GADNativeAd : NSObject
+           ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:53:23: error: cannot find type 'PHAsset' in scope
+    var currentAsset: PHAsset? {
+                      ^~~~~~~
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:59:23: error: cannot find type 'PHAsset' in scope
+    var photoAssets: [PHAsset] {
+                      ^~~~~~~
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:90:34: error: 'GADNativeAd' has been renamed to 'NativeAd'
+    func fillNextAdSlot(with ad: GADNativeAd) {
+                                 ^~~~~~~~~~~
+                                 NativeAd
+/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/GoogleMobileAds.framework/Headers/GADNativeAd.h:28:12: note: 'GADNativeAd' was obsoleted in Swift 3
+@interface GADNativeAd : NSObject
+           ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:111:31: error: cannot find type 'PHAsset' in scope
+    func loadImage(for asset: PHAsset) async {
+                              ^~~~~~~
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:216:61: error: cannot find type 'AVPlayerItem' in scope
+    private func loadVideoItem(for asset: PHAsset) async -> AVPlayerItem? {
+                                                            ^~~~~~~~~~~~
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:216:43: error: cannot find type 'PHAsset' in scope
+    private func loadVideoItem(for asset: PHAsset) async -> AVPlayerItem? {
+                                          ^~~~~~~
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:4:7: error: type 'SwipeViewModel' does not conform to protocol 'ObservableObject'
+class SwipeViewModel: ObservableObject {
+      ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:4:7: note: add stubs for conformance
+class SwipeViewModel: ObservableObject {
+      ^
+Combine.ObservableObject.objectWillChange:2:5: note: protocol requires property 'objectWillChange' with type 'Self.ObjectWillChangePublisher'
+var objectWillChange: Self.ObjectWillChangePublisher { get }}
+    ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:37:6: error: initializer 'init(wrappedValue:)' is not available due to missing import of defining module 'Combine'
+    @Published var items: [DeckItem] = []
+     ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:2:1: note: add import of module 'Combine'
+
+^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:38:6: error: initializer 'init(wrappedValue:)' is not available due to missing import of defining module 'Combine'
+    @Published var currentIndex: Int = 0
+     ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:2:1: note: add import of module 'Combine'
+
+^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:39:6: error: initializer 'init(wrappedValue:)' is not available due to missing import of defining module 'Combine'
+    @Published var isLoading: Bool = false
+     ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:2:1: note: add import of module 'Combine'
+
+^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:40:6: error: initializer 'init(wrappedValue:)' is not available due to missing import of defining module 'Combine'
+    @Published var pendingDeletes: Set<String> = [] // LocalIdentifiers
+     ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:2:1: note: add import of module 'Combine'
+
+^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:41:6: error: initializer 'init(wrappedValue:)' is not available due to missing import of defining module 'Combine'
+    @Published var lastUndoDirection: SwipeDirection = .left
+     ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:2:1: note: add import of module 'Combine'
+
+^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:42:6: error: initializer 'init(wrappedValue:)' is not available due to missing import of defining module 'Combine'
+    @Published var isUndoing: Bool = false
+     ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:2:1: note: add import of module 'Combine'
+
+^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:69:6: error: initializer 'init(wrappedValue:)' is not available due to missing import of defining module 'Combine'
+    @Published var imageCache: [String: UIImage] = [:]
+     ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/ViewModels/SwipeViewModel.swift:2:1: note: add import of module 'Combine'
+
+^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Views/Swipe/AdCard.swift:5:19: error: 'GADNativeAd' has been renamed to 'NativeAd'
+    let nativeAd: GADNativeAd?
+                  ^~~~~~~~~~~
+                  NativeAd
+/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/GoogleMobileAds.framework/Headers/GADNativeAd.h:28:12: note: 'GADNativeAd' was obsoleted in Swift 3
+@interface GADNativeAd : NSObject
+           ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Views/Swipe/AdCard.swift:8:20: error: cannot find type 'View' in scope
+    var body: some View {
+                   ^~~~
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Views/Swipe/AdCard.swift:4:16: error: cannot find type 'View' in scope
+struct AdCard: View {
+               ^~~~
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Views/Swipe/AdCard.swift:30:20: error: cannot find type 'View' in scope
+    var body: some View {
+                   ^~~~
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Views/Swipe/AdCard.swift:27:21: error: cannot find type 'View' in scope
+struct HouseAdView: View {
+                    ^~~~
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Views/Swipe/AdCard.swift:81:19: error: 'GADNativeAd' has been renamed to 'NativeAd'
+    let nativeAd: GADNativeAd
+                  ^~~~~~~~~~~
+                  NativeAd
+/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/GoogleMobileAds.framework/Headers/GADNativeAd.h:28:12: note: 'GADNativeAd' was obsoleted in Swift 3
+@interface GADNativeAd : NSObject
+           ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Views/Swipe/AdCard.swift:83:30: error: cannot find type 'Context' in scope
+    func makeUIView(context: Context) -> GADNativeAdView {
+                             ^~~~~~~
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Views/Swipe/AdCard.swift:83:42: error: 'GADNativeAdView' has been renamed to 'NativeAdView'
+    func makeUIView(context: Context) -> GADNativeAdView {
+                                         ^~~~~~~~~~~~~~~
+                                         NativeAdView
+/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/GoogleMobileAds.framework/Headers/GADNativeAd.h:126:12: note: 'GADNativeAdView' was obsoleted in Swift 3
+@interface GADNativeAdView : UIView
+           ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Views/Swipe/AdCard.swift:89:59: error: cannot find type 'Context' in scope
+    func updateUIView(_ uiView: GADNativeAdView, context: Context) {
+                                                          ^~~~~~~
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Views/Swipe/AdCard.swift:89:33: error: 'GADNativeAdView' has been renamed to 'NativeAdView'
+    func updateUIView(_ uiView: GADNativeAdView, context: Context) {
+                                ^~~~~~~~~~~~~~~
+                                NativeAdView
+/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/GoogleMobileAds.framework/Headers/GADNativeAd.h:126:12: note: 'GADNativeAdView' was obsoleted in Swift 3
+@interface GADNativeAdView : UIView
+           ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Views/Swipe/AdCard.swift:102:37: error: 'GADNativeAdView' has been renamed to 'NativeAdView'
+    func constructNativeAdView() -> GADNativeAdView {
+                                    ^~~~~~~~~~~~~~~
+                                    NativeAdView
+/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphoneos/GoogleMobileAds.framework/Headers/GADNativeAd.h:126:12: note: 'GADNativeAdView' was obsoleted in Swift 3
+@interface GADNativeAdView : UIView
+           ^
+/Users/victor/Documents/Dev/Photo Swiping App/Prune/Prune/Views/Swipe/AdCard.swift:80:29: error: cannot find type 'UIViewRepresentable' in scope
+struct NativeAdViewWrapper: UIViewRepresentable {
+                            ^~~~~~~~~~~~~~~~~~~
+
+SwiftCompile normal arm64 Compiling\ AdCard.swift,\ AssetInfoView.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Views/Swipe/AdCard.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Views/Swipe/AssetInfoView.swift (in target 'Prune' from project 'Prune')
+SwiftCompile normal arm64 /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Views/Swipe/AdCard.swift (in target 'Prune' from project 'Prune')
+    cd /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune
+    
+
+SwiftCompile normal arm64 /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Views/Swipe/AssetInfoView.swift (in target 'Prune' from project 'Prune')
+    cd /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune
+    
+
+SwiftCompile normal arm64 Compiling\ SwipeViewModel.swift,\ DateSelectionView.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/ViewModels/SwipeViewModel.swift /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Views/Home/DateSelectionView.swift (in target 'Prune' from project 'Prune')
+
+SwiftCompile normal arm64 /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/ViewModels/SwipeViewModel.swift (in target 'Prune' from project 'Prune')
+    cd /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune
+    
+
+SwiftCompile normal arm64 /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune/Prune/Views/Home/DateSelectionView.swift (in target 'Prune' from project 'Prune')
+    cd /Users/victor/Documents/Dev/Photo\ Swiping\ App/Prune
+    
+
+SwiftCompile normal arm64 Compiling\ GeneratedAssetSymbols.swift /Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Intermediates.noindex/Prune.build/Debug-iphoneos/Prune.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'Prune' from project 'Prune')
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ RevenueCatUI (in target 'RevenueCatUI' from project 'RevenueCat')
+
+** BUILD FAILED **
+
+
+The following build commands failed:
+	SwiftEmitModule normal arm64 Emitting\ module\ for\ Prune (in target 'Prune' from project 'Prune')
+	EmitSwiftModule normal arm64 (in target 'Prune' from project 'Prune')
+	Building project Prune with scheme Prune
+(3 failures)
