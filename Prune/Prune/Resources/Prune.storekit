@@ -5,7 +5,7 @@
   ],
   "products" : [
     {
-      "displayPrice" : "49.99",
+      "displayPrice" : "99.99",
       "familyShareable" : false,
       "internalID" : "prune_lifetime_id",
       "localizations" : [
@@ -28,8 +28,8 @@
       "id" : "21345532",
       "localizations" : [
         {
-          "description" : "Prune Pro Subscriptions",
-          "displayName" : "Prune Pro",
+          "description" : "Pruned Pro Subscriptions",
+          "displayName" : "Pruned Pro",
           "locale" : "en_US"
         }
       ],
@@ -67,7 +67,7 @@
           "codeOffers" : [
 
           ],
-          "displayPrice" : "19.99",
+          "displayPrice" : "39.99",
           "familyShareable" : false,
           "groupNumber" : 2,
           "internalID" : "prune_yearly_id",

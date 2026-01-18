@@ -9,20 +9,19 @@ struct DateSelectionView: View {
     @State private var startDate = Date()
     @State private var endDate = Date()
     
-    // Generate last 12 months
+    // Generate last 12 months (Newest -> Oldest)
     var months: [Date] {
         let calendar = Calendar.current
         let now = Date()
         var dates: [Date] = []
-        // Go back 11 months from now to start
-        guard let start = calendar.date(byAdding: .month, value: -11, to: now) else { return [] }
         
         for i in 0..<12 {
-            if let date = calendar.date(byAdding: .month, value: i, to: start) {
+            // Go back i months from now
+            if let date = calendar.date(byAdding: .month, value: -i, to: now) {
                 dates.append(date)
             }
         }
-        return dates // Chronological order: Oldest -> Newest
+        return dates
     }
     
     // Grid for months
