@@ -23,9 +23,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Prune needs permission to modify your library when you choose to delete photos.</string>
+	<string>Pruned needs permission to modify your library when you choose to delete photos.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Prune needs access to your photos to help you organize and clean them up.</string>
+	<string>Pruned needs access to your photos to help you organize and clean them up.</string>
 	<key>UILaunchScreen</key>
 	<dict>
 		<key>UIColorName</key>

@@ -42,7 +42,7 @@ class PhotoLibraryService: ObservableObject {
         return status
     }
     
-    nonisolated func fetchAssets(for feed: FeedType) async -> [PHAsset] {
+    nonisolated func fetchAssets(for feed: FeedType, excludingSeen: Set<String> = []) async -> [PHAsset] {
         return await Task.detached(priority: .userInitiated) {
             var result: [PHAsset] = []
             
@@ -152,6 +152,13 @@ class PhotoLibraryService: ObservableObject {
                     count += 1
 
                 }
+            }
+            
+            // Filter out previously seen photos
+            if !excludingSeen.isEmpty {
+                let beforeCount = result.count
+                result = result.filter { !excludingSeen.contains($0.localIdentifier) }
+                print("[PhotoService] Filtered out \(beforeCount - result.count) seen photos, \(result.count) remaining.")
             }
             
             return result

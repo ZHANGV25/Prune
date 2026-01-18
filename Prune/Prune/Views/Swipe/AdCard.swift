@@ -2,169 +2,231 @@ import SwiftUI
 import GoogleMobileAds
 import UIKit
 
+// MARK: - AdCard
 struct AdCard: View {
     let nativeAd: NativeAd?
     let onDismiss: () -> Void
     
     var body: some View {
         GeometryReader { geo in
-            ZStack {
+            VStack(spacing: 0) {
                 if let ad = nativeAd {
-                    // Google Native Ad
-                    NativeAdViewWrapper(nativeAd: ad)
-                        .cornerRadius(20)
-                        .shadow(radius: 10)
+                    // Remove Ads button
+                    HStack {
+                        Spacer()
+                        Button(action: onDismiss) {
+                            HStack(spacing: 4) {
+                                Image(systemName: "crown.fill")
+                                Text("Remove Ads")
+                                    .font(.caption)
+                                    .fontWeight(.bold)
+                            }
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .background(.ultraThinMaterial)
+                            .cornerRadius(16)
+                            .foregroundColor(.primary)
+                        }
+                    }
+                    .padding(.bottom, 8)
+                    
+                    // Native Ad View
+                    NativeAdContainerView(nativeAd: ad)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    
                 } else {
-                    // Fallback House Ad
                     HouseAdView(onDismiss: onDismiss)
+                        .cornerRadius(20)
                 }
             }
         }
-        .padding(12)
+        .padding(EdgeInsets(top: 70, leading: 12, bottom: 100, trailing: 12))
     }
 }
 
-// MARK: - House Ad (Prune Pro)
+// MARK: - House Ad
 struct HouseAdView: View {
     let onDismiss: () -> Void
-    
     var body: some View {
         ZStack {
             Color(UIColor.secondarySystemBackground)
-            
             VStack(spacing: 16) {
-                 Text("Prune Pro")
-                    .font(.largeTitle)
-                    .bold()
-                 
-                 Text("Support development & Remove Ads")
-                    .foregroundColor(.secondary)
-                 
-                 Button("Upgrade") {
-                     onDismiss()
-                 }
-                 .buttonStyle(.borderedProminent)
+                Text("Pruned Pro").font(.largeTitle).bold()
+                Text("Support development & Remove Ads").foregroundColor(.secondary)
+                Button("Upgrade") { onDismiss() }.buttonStyle(.borderedProminent)
             }
         }
     }
 }
 
-// MARK: - Native Ad Wrapper
-struct NativeAdViewWrapper: UIViewRepresentable {
+// MARK: - Native Ad Container
+struct NativeAdContainerView: UIViewRepresentable {
     let nativeAd: NativeAd
     
-    func makeUIView(context: Context) -> NativeAdView {
-        return constructNativeAdView()
+    func makeUIView(context: Context) -> PruneNativeAdView {
+        return PruneNativeAdView()
     }
     
-    func updateUIView(_ uiView: NativeAdView, context: Context) {
-        uiView.nativeAd = nativeAd
-        (uiView.headlineView as? UILabel)?.text = nativeAd.headline
-        (uiView.bodyView as? UILabel)?.text = nativeAd.body
-        (uiView.callToActionView as? UIButton)?.setTitle(nativeAd.callToAction, for: .normal)
-        (uiView.iconView as? UIImageView)?.image = nativeAd.icon?.image
-        
-        // Media View
-        if let mediaView = uiView.mediaView {
-            mediaView.mediaContent = nativeAd.mediaContent
+    func updateUIView(_ uiView: PruneNativeAdView, context: Context) {
+        DispatchQueue.main.async {
+            uiView.configure(with: nativeAd)
         }
     }
+}
+
+// MARK: - Custom NativeAdView
+class PruneNativeAdView: NativeAdView {
     
-    func constructNativeAdView() -> NativeAdView {
-        let adView = NativeAdView()
-        adView.backgroundColor = .secondarySystemBackground
-        adView.clipsToBounds = true // Ensure content doesn't bleed out visually, though frames must still be valid
+    private var isConfigured = false
+    
+    private let iconImageView = UIImageView()
+    private let headlineLabel = UILabel()
+    private let bodyLabel = UILabel()
+    private let ctaButton = UIButton(type: .system)
+    private let adMediaView = MediaView()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupUI() {
+        backgroundColor = UIColor.secondarySystemBackground
+        clipsToBounds = true
+        layer.masksToBounds = true
         
-        // Create Views
-        let iconView = UIImageView()
-        iconView.translatesAutoresizingMaskIntoConstraints = false
-        iconView.contentMode = .scaleAspectFit
-        iconView.layer.cornerRadius = 10
-        iconView.clipsToBounds = true
-        adView.addSubview(iconView)
-        adView.iconView = iconView
+        let margin: CGFloat = 16
         
-        let headlineLabel = UILabel()
+        iconImageView.translatesAutoresizingMaskIntoConstraints = false
+        iconImageView.contentMode = .scaleAspectFill
+        iconImageView.layer.cornerRadius = 8
+        iconImageView.clipsToBounds = true
+        iconImageView.backgroundColor = .systemGray5
+        addSubview(iconImageView)
+        self.iconView = iconImageView
+        
         headlineLabel.translatesAutoresizingMaskIntoConstraints = false
         headlineLabel.font = .boldSystemFont(ofSize: 17)
         headlineLabel.textColor = .label
         headlineLabel.numberOfLines = 2
-        adView.addSubview(headlineLabel)
-        adView.headlineView = headlineLabel
+        addSubview(headlineLabel)
+        self.headlineView = headlineLabel
         
-        let bodyLabel = UILabel()
         bodyLabel.translatesAutoresizingMaskIntoConstraints = false
         bodyLabel.font = .systemFont(ofSize: 14)
         bodyLabel.textColor = .secondaryLabel
-        bodyLabel.numberOfLines = 3
-        adView.addSubview(bodyLabel)
-        adView.bodyView = bodyLabel
+        bodyLabel.numberOfLines = 2
+        addSubview(bodyLabel)
+        self.bodyView = bodyLabel
         
-        let mediaView = MediaView()
-        mediaView.translatesAutoresizingMaskIntoConstraints = false
-        mediaView.contentMode = .scaleAspectFill
-        mediaView.clipsToBounds = true
-        adView.addSubview(mediaView)
-        adView.mediaView = mediaView
+        adMediaView.translatesAutoresizingMaskIntoConstraints = false
+        adMediaView.contentMode = .scaleAspectFit
+        adMediaView.clipsToBounds = true
+        addSubview(adMediaView)
+        self.mediaView = adMediaView
         
-        let ctaButton = UIButton(type: .system)
         ctaButton.translatesAutoresizingMaskIntoConstraints = false
-        ctaButton.setTitle("Details", for: .normal)
+        ctaButton.setTitle("Install", for: .normal)
         ctaButton.backgroundColor = .systemBlue
         ctaButton.setTitleColor(.white, for: .normal)
-        ctaButton.layer.cornerRadius = 10
-        ctaButton.isUserInteractionEnabled = false // Let NativeAdView handle clicks
-        adView.addSubview(ctaButton)
-        adView.callToActionView = ctaButton
+        ctaButton.titleLabel?.font = .boldSystemFont(ofSize: 16)
+        ctaButton.layer.cornerRadius = 12
+        ctaButton.clipsToBounds = true
+        ctaButton.isUserInteractionEnabled = false
+        addSubview(ctaButton)
+        self.callToActionView = ctaButton
         
-        let adBadge = UILabel()
-        adBadge.translatesAutoresizingMaskIntoConstraints = false
-        adBadge.text = "Ad"
-        adBadge.font = .systemFont(ofSize: 11, weight: .bold)
-        adBadge.textColor = .white
-        adBadge.backgroundColor = .orange
-        adBadge.layer.cornerRadius = 3
-        adBadge.clipsToBounds = true
-        adBadge.textAlignment = .center
-        adView.addSubview(adBadge)
-        
-        // Constraints
         NSLayoutConstraint.activate([
-            iconView.leadingAnchor.constraint(equalTo: adView.leadingAnchor, constant: 15),
-            iconView.topAnchor.constraint(equalTo: adView.topAnchor, constant: 15),
-            iconView.widthAnchor.constraint(equalToConstant: 50),
-            iconView.heightAnchor.constraint(equalToConstant: 50),
+            iconImageView.topAnchor.constraint(equalTo: topAnchor, constant: margin),
+            iconImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: margin),
+            iconImageView.widthAnchor.constraint(equalToConstant: 48),
+            iconImageView.heightAnchor.constraint(equalToConstant: 48),
             
-            headlineLabel.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 10),
-            headlineLabel.topAnchor.constraint(equalTo: iconView.topAnchor),
-            headlineLabel.trailingAnchor.constraint(equalTo: adView.trailingAnchor, constant: -15),
+            headlineLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 12),
+            headlineLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margin),
+            headlineLabel.topAnchor.constraint(equalTo: iconImageView.topAnchor),
             
-            adBadge.leadingAnchor.constraint(equalTo: locationSafe(iconView.leadingAnchor)), // Just safe placement
-            adBadge.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 5),
-            adBadge.widthAnchor.constraint(equalToConstant: 25),
-            adBadge.heightAnchor.constraint(equalToConstant: 16),
-
-            bodyLabel.leadingAnchor.constraint(equalTo: iconView.leadingAnchor),
-            bodyLabel.topAnchor.constraint(equalTo: adBadge.bottomAnchor, constant: 10),
-            bodyLabel.trailingAnchor.constraint(equalTo: adView.trailingAnchor, constant: -15),
+            bodyLabel.topAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: 12),
+            bodyLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: margin),
+            bodyLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margin),
             
-            mediaView.leadingAnchor.constraint(equalTo: adView.leadingAnchor),
-            mediaView.trailingAnchor.constraint(equalTo: adView.trailingAnchor),
-            mediaView.topAnchor.constraint(equalTo: bodyLabel.bottomAnchor, constant: 15),
-            mediaView.heightAnchor.constraint(equalToConstant: 250), // Fixed height for media
-            
-            ctaButton.leadingAnchor.constraint(equalTo: adView.leadingAnchor, constant: 15),
-            ctaButton.trailingAnchor.constraint(equalTo: adView.trailingAnchor, constant: -15),
-            ctaButton.topAnchor.constraint(equalTo: mediaView.bottomAnchor, constant: 20),
+            ctaButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin),
+            ctaButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: margin),
+            ctaButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margin),
             ctaButton.heightAnchor.constraint(equalToConstant: 50),
             
-            // IMPORTANT: Constrain bottom so content doesn't overflow or if view resizes, content is respected
-             ctaButton.bottomAnchor.constraint(lessThanOrEqualTo: adView.bottomAnchor, constant: -20)
+            adMediaView.topAnchor.constraint(equalTo: bodyLabel.bottomAnchor, constant: 12),
+            adMediaView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: margin),
+            adMediaView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margin),
+            adMediaView.bottomAnchor.constraint(equalTo: ctaButton.topAnchor, constant: -12),
         ])
+    }
+    
+    func configure(with nativeAd: NativeAd) {
+        guard !isConfigured else { return }
         
-        // Helper
-        func locationSafe(_ anchor: NSLayoutXAxisAnchor) -> NSLayoutXAxisAnchor { return anchor }
+        self.nativeAd = nativeAd
         
-        return adView
+        headlineLabel.text = nativeAd.headline
+        bodyLabel.text = nativeAd.body
+        ctaButton.setTitle(nativeAd.callToAction ?? "Learn More", for: .normal)
+        iconImageView.image = nativeAd.icon?.image
+        adMediaView.mediaContent = nativeAd.mediaContent
+        
+        isConfigured = true
+        
+        setNeedsLayout()
+        layoutIfNeeded()
+        
+        // Fix SDK-added views positioning
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+            self?.fixSDKViewPositions()
+        }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        fixSDKViewPositions()
+    }
+    
+    /// Fixes any SDK-added views positioned at the bounds edge
+    private func fixSDKViewPositions() {
+        for subview in subviews {
+            let typeName = String(describing: type(of: subview))
+            
+            if typeName.contains("GAD") || typeName.contains("Attribution") {
+                var frame = subview.frame
+                var needsFix = false
+                
+                if frame.origin.x >= bounds.width {
+                    frame.origin.x = bounds.width - max(frame.width, 1) - 4
+                    needsFix = true
+                }
+                if frame.origin.y >= bounds.height {
+                    frame.origin.y = bounds.height - max(frame.height, 1) - 4
+                    needsFix = true
+                }
+                if frame.origin.x < 0 {
+                    frame.origin.x = 4
+                    needsFix = true
+                }
+                if frame.origin.y < 0 {
+                    frame.origin.y = 4
+                    needsFix = true
+                }
+                if frame.width <= 0 || frame.height <= 0 {
+                    frame = CGRect(x: 4, y: 4, width: max(frame.width, 1), height: max(frame.height, 1))
+                    needsFix = true
+                }
+                
+                if needsFix {
+                    subview.frame = frame
+                }
+            }
+        }
     }
 }

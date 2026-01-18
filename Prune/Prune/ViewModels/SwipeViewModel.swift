@@ -10,6 +10,7 @@ class SwipeViewModel: ObservableObject {
     private let photoService = PhotoLibraryService.shared
     private let purchaseService = PurchaseService.shared
     private let adService = AdMobService.shared
+    private let seenPhotosService = SeenPhotosService.shared
     private var cancellables = Set<AnyCancellable>()
     
     enum SwipeDirection {
@@ -169,7 +170,8 @@ class SwipeViewModel: ObservableObject {
     func loadAssets() async {
         print("[SwipeViewModel] Loading assets for \(feedType)...")
         isLoading = true
-        let fetched = await photoService.fetchAssets(for: feedType)
+        let seenIds = seenPhotosService.allSeenIds()
+        let fetched = await photoService.fetchAssets(for: feedType, excludingSeen: seenIds)
         
         // INTERLEAVE ADS
         var newItems: [DeckItem] = []
@@ -235,8 +237,9 @@ class SwipeViewModel: ObservableObject {
         
         if let current = currentItem {
             switch current {
-            case .photo:
+            case .photo(let asset):
                 AnalyticsService.shared.logSwipe(keep: true, feedType: "\(feedType)")
+                seenPhotosService.markAsSeen(asset.localIdentifier)
             case .ad(_, let nativeAd):
                 print("Ad swiped right")
                 // If it's a native ad, we might want to register a click if we can.
@@ -257,6 +260,7 @@ class SwipeViewModel: ObservableObject {
             case .photo(let asset):
                  AnalyticsService.shared.logSwipe(keep: false, feedType: "\(feedType)")
                  pendingDeletes.insert(asset.localIdentifier)
+                 seenPhotosService.markAsSeen(asset.localIdentifier)
             case .ad:
                  print("Ad swiped left")
             }
@@ -275,22 +279,35 @@ class SwipeViewModel: ObservableObject {
         guard currentIndex > 0 else { return }
         isUndoing = true
         
+        // SKIP ADS: Recursively undo ads until we find a photo
+        while currentIndex > 0, case .ad = items[currentIndex - 1] {
+            currentIndex -= 1
+            if !swipeHistory.isEmpty {
+                swipeHistory.removeLast()
+            }
+        }
+        
+        // Now perform the actual undo for the Photo
+        guard currentIndex > 0 else { return }
+        
         // Capture direction BEFORE removing it
         if let last = swipeHistory.last {
             lastUndoDirection = last
             swipeHistory.removeLast()
         }
         
-        // Decrement first
+        // Decrement to the photo
         currentIndex -= 1
         
         let restoredItem = items[currentIndex]
         
         // If it was a photo marked for deletion, unmark it
+        // Also remove from seen so it stays visible in current session
         if case .photo(let asset) = restoredItem {
             if pendingDeletes.contains(asset.localIdentifier) {
                 pendingDeletes.remove(asset.localIdentifier)
             }
+            seenPhotosService.markAsUnseen(asset.localIdentifier)
         }
         
         AnalyticsService.shared.logUndo()

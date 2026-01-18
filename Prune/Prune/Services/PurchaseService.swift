@@ -9,6 +9,7 @@ class PurchaseService: NSObject, ObservableObject {
     
     @Published var isPro: Bool = false
     @Published var customerInfo: CustomerInfo?
+    @Published var currentOffering: Offering?
     
     private override init() {
         super.init()
@@ -28,14 +29,21 @@ class PurchaseService: NSObject, ObservableObject {
                 self?.updateStatus(with: info)
             }
         }
+        
+        // Fetch Offerings
+        Purchases.shared.getOfferings { [weak self] offerings, error in
+            if let offerings = offerings {
+                self?.currentOffering = offerings.current
+                print("[PurchaseService] Loaded offering: \(offerings.current?.identifier ?? "None")")
+            } else if let error = error {
+                print("[PurchaseService] Error fetching offerings: \(error.localizedDescription)")
+            }
+        }
     }
     
     func updateStatus(with info: CustomerInfo) {
         self.customerInfo = info
         // Check "Prune Pro" entitlement (Must match RevenueCat Dashboard)
-        // If not found, fall back to "pro" or whatever you name it.
-        // For MVP we assume entitlement identifier is "Prune Pro" or "pro_access"
-        // Let's use "Prune Pro" as requested.
         let isActive = info.entitlements["Prune Pro"]?.isActive == true
         
         // Update State
@@ -43,6 +51,11 @@ class PurchaseService: NSObject, ObservableObject {
         UserDefaults.standard.set(isActive, forKey: "isPro_cached")
         
         print("[PurchaseService] User is Pro: \(isActive)")
+    }
+    
+    func purchase(package: Package) async throws {
+        let result = try await Purchases.shared.purchase(package: package)
+        updateStatus(with: result.customerInfo)
     }
     
     func restorePurchases() async {

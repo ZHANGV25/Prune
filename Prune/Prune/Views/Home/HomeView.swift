@@ -37,7 +37,7 @@ struct HomeView: View {
                     VStack(alignment: .leading, spacing: 24) {
                         // Header
                         HStack {
-                            Text("Prune")
+                            Text("Pruned")
                                 .font(.system(size: 40, weight: .bold))
                                 .foregroundColor(.white)
                             

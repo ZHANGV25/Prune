@@ -13,6 +13,8 @@ struct SwipeDeckView: View {
     @State private var showFavoriteFeedback = false
     @State private var showInfoSheet = false
     @State private var showPaywall = false
+    @State private var hapticGenerator = UIImpactFeedbackGenerator(style: .medium)
+    @State private var hasTriggeredHaptic = false
     
     init(feedType: FeedType) {
         _viewModel = StateObject(wrappedValue: SwipeViewModel(feedType: feedType))
@@ -167,9 +169,20 @@ struct SwipeDeckView: View {
                                 DragGesture()
                                     .onChanged { value in
                                         translation = value.translation
+                                        
+                                        // Haptic Feedback Logic
+                                        let threshold: CGFloat = 100
+                                        if abs(translation.width) > threshold && !hasTriggeredHaptic {
+                                            hapticGenerator.impactOccurred()
+                                            hasTriggeredHaptic = true
+                                        } else if abs(translation.width) < threshold && hasTriggeredHaptic {
+                                            // Reset if they go back
+                                            hasTriggeredHaptic = false
+                                        }
                                     }
                                     .onEnded { value in
                                         handleSwipe(translation: value.translation)
+                                        hasTriggeredHaptic = false // Reset for next time
                                     }
                             )
                             // Clean Tap Gesture
@@ -281,8 +294,12 @@ struct SwipeDeckView: View {
             
             // CHECK IF AD
             if let current = viewModel.currentItem {
-                if case .ad = current {
-                    showPaywall = true
+                if case .ad(_, let nativeAd) = current {
+                    // Only show paywall if it's a fallback ad (nil nativeAd)
+                    // If it's a real ad, swipe right just 'keeps' (or acts as click/dismiss)
+                    if nativeAd == nil {
+                        showPaywall = true
+                    }
                 }
             }
             
@@ -413,7 +430,7 @@ struct PhotoCard: View {
     func fetchImage() {
         let manager = PHCachingImageManager.default()
         let options = PHImageRequestOptions()
-        options.deliveryMode = .highQualityFormat
+        options.deliveryMode = .opportunistic
         options.isNetworkAccessAllowed = true
         options.isSynchronous = false
         
