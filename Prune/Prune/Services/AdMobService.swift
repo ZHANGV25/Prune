@@ -37,8 +37,7 @@ class AdMobService: NSObject, ObservableObject {
         
         print("[AdMob DEBUG] Root view controller: \(String(describing: root))")
         
-        // Test Ad Unit ID for Native Advanced
-        let adUnitID = "ca-app-pub-3940256099942544/3986624511"
+        let adUnitID = AppConfig.admobNativeAdUnitID
         print("[AdMob DEBUG] Using Ad Unit ID: \(adUnitID)")
         
         adLoader = AdLoader(

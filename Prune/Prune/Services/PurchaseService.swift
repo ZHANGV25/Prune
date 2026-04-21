@@ -19,7 +19,7 @@ class PurchaseService: NSObject, ObservableObject {
     
     func configure() {
         Purchases.logLevel = .debug
-        Purchases.configure(withAPIKey: "test_vUZXRnxlzkFvRNLCafoRXltXvgC")
+        Purchases.configure(withAPIKey: AppConfig.revenueCatAPIKey)
         
         Purchases.shared.delegate = self
         
@@ -43,8 +43,7 @@ class PurchaseService: NSObject, ObservableObject {
     
     func updateStatus(with info: CustomerInfo) {
         self.customerInfo = info
-        // Check "Prune Pro" entitlement (Must match RevenueCat Dashboard)
-        let isActive = info.entitlements["Prune Pro"]?.isActive == true
+        let isActive = info.entitlements[AppConfig.proEntitlementID]?.isActive == true
         
         // Update State
         self.isPro = isActive

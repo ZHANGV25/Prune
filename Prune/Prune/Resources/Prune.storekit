@@ -42,9 +42,39 @@
           "codeOffers" : [
 
           ],
-          "displayPrice" : "4.99",
+          "displayPrice" : "6.99",
           "familyShareable" : false,
           "groupNumber" : 1,
+          "internalID" : "prune_weekly_id",
+          "introductoryOffer" : {
+            "displayPrice" : "0.00",
+            "internalID" : "weekly_intro_offer_id",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P3D"
+          },
+          "localizations" : [
+            {
+              "description" : "3-day free trial, then $6.99/week",
+              "displayName" : "Weekly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "prune_weekly",
+          "recurringSubscriptionPeriod" : "P1W",
+          "referenceName" : "Weekly",
+          "subscriptionGroupID" : "21345532",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "4.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
           "internalID" : "prune_monthly_id",
           "introductoryOffer" : null,
           "localizations" : [
@@ -69,12 +99,12 @@
           ],
           "displayPrice" : "39.99",
           "familyShareable" : false,
-          "groupNumber" : 2,
+          "groupNumber" : 3,
           "internalID" : "prune_yearly_id",
           "introductoryOffer" : {
             "displayPrice" : "0.99",
             "internalID" : "intro_offer_id",
-            "paymentMode" : "none",
+            "paymentMode" : "payAsYouGo",
             "subscriptionPeriod" : "P1W"
           },
           "localizations" : [
