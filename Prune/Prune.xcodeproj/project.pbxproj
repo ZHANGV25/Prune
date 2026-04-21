@@ -9,14 +9,23 @@
 /* Begin PBXBuildFile section */
 		06B4CFF65BC396238337701D /* EstimatedBytesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5C22029DA1ED5DE73BC5F2 /* EstimatedBytesTests.swift */; };
 		1C9C724AC72AC25C4BF95E8B /* TimeframeMatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9804611F798C4FF030BA0A4F /* TimeframeMatcherTests.swift */; };
+		48BC0882EFAAD11B98D551AA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7529FF913DFB60AB7774A9D6 /* Foundation.framework */; };
 		573E50FB2F1559EB00FFABC4 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 573E50FA2F1559EB00FFABC4 /* RevenueCat */; };
 		573E50FD2F1559EB00FFABC4 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 573E50FC2F1559EB00FFABC4 /* RevenueCatUI */; };
 		573E51292F155BF500FFABC4 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 573E51282F155BF500FFABC4 /* GoogleMobileAds */; };
 		7B9A91ADC5E748EE821A332B /* SeenPhotosServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8133177CFEC0794796D51F9F /* SeenPhotosServiceTests.swift */; };
+		AD0F23D73E8600DA3B04C59E /* PruneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F57F103E759A9760AE9568 /* PruneUITests.swift */; };
 		F33A9BACA50568BF0C80C842 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7529FF913DFB60AB7774A9D6 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		007098AA047F26D3792A9BE7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 573E507D2F14105B00FFABC4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 573E50842F14105B00FFABC4;
+			remoteInfo = Prune;
+		};
 		7D1A4CD22487CD556743BFF9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 573E507D2F14105B00FFABC4 /* Project object */;
@@ -31,7 +40,9 @@
 		573E50852F14105B00FFABC4 /* Prune.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Prune.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B1C0318508E5289469D0367 /* PruneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PruneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7529FF913DFB60AB7774A9D6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		770FB337CE0E61379C5EC8D8 /* PruneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PruneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8133177CFEC0794796D51F9F /* SeenPhotosServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SeenPhotosServiceTests.swift; sourceTree = "<group>"; };
+		81F57F103E759A9760AE9568 /* PruneUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PruneUITests.swift; sourceTree = "<group>"; };
 		9804611F798C4FF030BA0A4F /* TimeframeMatcherTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TimeframeMatcherTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -75,6 +86,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E340CC86806997545DEFA103 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48BC0882EFAAD11B98D551AA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -104,6 +123,7 @@
 				573E50862F14105B00FFABC4 /* Products */,
 				37C8B19CB049F514C11D59C6 /* Frameworks */,
 				3A4DDFA4FF66F405208B8CE3 /* PruneTests */,
+				ED0A495B5E81F552E690E8E2 /* PruneUITests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,6 +132,7 @@
 			children = (
 				573E50852F14105B00FFABC4 /* Prune.app */,
 				6B1C0318508E5289469D0367 /* PruneTests.xctest */,
+				770FB337CE0E61379C5EC8D8 /* PruneUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -122,6 +143,15 @@
 				7529FF913DFB60AB7774A9D6 /* Foundation.framework */,
 			);
 			name = iOS;
+			sourceTree = "<group>";
+		};
+		ED0A495B5E81F552E690E8E2 /* PruneUITests */ = {
+			isa = PBXGroup;
+			children = (
+				81F57F103E759A9760AE9568 /* PruneUITests.swift */,
+			);
+			name = PruneUITests;
+			path = PruneUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,6 +174,24 @@
 			productName = PruneTests;
 			productReference = 6B1C0318508E5289469D0367 /* PruneTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		5650A26C75D47C103FB53225 /* PruneUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2AA67F1D600DA07CAC900C08 /* Build configuration list for PBXNativeTarget "PruneUITests" */;
+			buildPhases = (
+				90937FDC1D8F8AC0BCA33B5F /* Sources */,
+				E340CC86806997545DEFA103 /* Frameworks */,
+				D516200629BD387E3C038F1E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A517D2540E5CAD65A9722FDB /* PBXTargetDependency */,
+			);
+			name = PruneUITests;
+			productName = PruneUITests;
+			productReference = 770FB337CE0E61379C5EC8D8 /* PruneUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		573E50842F14105B00FFABC4 /* Prune */ = {
 			isa = PBXNativeTarget;
@@ -205,6 +253,7 @@
 			targets = (
 				573E50842F14105B00FFABC4 /* Prune */,
 				26B916ACF03FCDEAD3B458DC /* PruneTests */,
+				5650A26C75D47C103FB53225 /* PruneUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -224,6 +273,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D516200629BD387E3C038F1E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -231,6 +287,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		90937FDC1D8F8AC0BCA33B5F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD0F23D73E8600DA3B04C59E /* PruneUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,6 +316,12 @@
 			name = Prune;
 			target = 573E50842F14105B00FFABC4 /* Prune */;
 			targetProxy = 7D1A4CD22487CD556743BFF9 /* PBXContainerItemProxy */;
+		};
+		A517D2540E5CAD65A9722FDB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Prune;
+			target = 573E50842F14105B00FFABC4 /* Prune */;
+			targetProxy = 007098AA047F26D3792A9BE7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -467,6 +537,26 @@
 			};
 			name = Release;
 		};
+		B8359C860392B3F380244D7C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CAYXPWAU93;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.isotropicstudios.PruneUITests;
+				PRODUCT_MODULE_NAME = PruneUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Prune;
+			};
+			name = Debug;
+		};
 		C8547EE9747D43E820C32CF0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -489,9 +579,39 @@
 			};
 			name = Release;
 		};
+		FF0FFF8C1B8E80BB2AF7D73A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CAYXPWAU93;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.isotropicstudios.PruneUITests;
+				PRODUCT_MODULE_NAME = PruneUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Prune;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2AA67F1D600DA07CAC900C08 /* Build configuration list for PBXNativeTarget "PruneUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF0FFF8C1B8E80BB2AF7D73A /* Release */,
+				B8359C860392B3F380244D7C /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		573E50802F14105B00FFABC4 /* Build configuration list for PBXProject "Prune" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
