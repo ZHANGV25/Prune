@@ -15,6 +15,7 @@ struct SwipeDeckView: View {
     @State private var showPaywall = false
     @State private var hapticGenerator = UIImpactFeedbackGenerator(style: .medium)
     @State private var hasTriggeredHaptic = false
+    @State private var celebrationStats: (count: Int, bytes: Int64)?
     
     init(feedType: FeedType) {
         _viewModel = StateObject(wrappedValue: SwipeViewModel(feedType: feedType))
@@ -23,8 +24,14 @@ struct SwipeDeckView: View {
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
-            
-            if showFinishScreen {
+
+            if let stats = celebrationStats {
+                CelebrationView(
+                    deletedCount: stats.count,
+                    approxBytesFreed: stats.bytes,
+                    onDone: { dismiss() }
+                )
+            } else if showFinishScreen {
                 FinishView(
                     pendingAssets: viewModel.photoAssets.filter { viewModel.pendingDeletes.contains($0.localIdentifier) },
                     onCommit: commitDeletes,
@@ -334,8 +341,15 @@ struct SwipeDeckView: View {
     
     func commitDeletes() {
         Task {
-            await viewModel.commitDeletes()
-            dismiss()
+            if let stats = await viewModel.commitDeletes() {
+                await MainActor.run {
+                    withAnimation(.easeOut(duration: 0.3)) {
+                        celebrationStats = (count: stats.0, bytes: stats.1)
+                    }
+                }
+            } else {
+                dismiss()
+            }
         }
     }
     

@@ -328,18 +328,35 @@ class SwipeViewModel: ObservableObject {
         }
     }
     
-    func commitDeletes() async {
-        guard !pendingDeletes.isEmpty else { return }
+    /// Returns (count, approxBytesFreed). `nil` if nothing committed.
+    @discardableResult
+    func commitDeletes() async -> (Int, Int64)? {
+        guard !pendingDeletes.isEmpty else { return nil }
         let allPhotos = items.compactMap { item -> PHAsset? in
             if case .photo(let asset) = item { return asset }
             return nil
         }
         let toDelete = allPhotos.filter { pendingDeletes.contains($0.localIdentifier) }
-        
+        let approxBytes = Self.estimatedBytes(for: toDelete)
+        let count = toDelete.count
+
         do {
             try await photoService.deleteAssets(toDelete)
+            AnalyticsService.shared.logCommitDelete(count: count, estimatedMB: Double(approxBytes) / 1_048_576.0)
+            return (count, approxBytes)
         } catch {
             print("Error deleting: \(error)")
+            return nil
+        }
+    }
+
+    /// Quick, non-blocking estimate: average 3 MB for photos, 25 MB for videos.
+    /// Exact file sizes require PHAssetResource KVC which is slow for large batches.
+    nonisolated static func estimatedBytes(for assets: [PHAsset]) -> Int64 {
+        let photoAvg: Int64 = 3 * 1_048_576       // ~3 MB
+        let videoAvg: Int64 = 25 * 1_048_576      // ~25 MB
+        return assets.reduce(0) { total, asset in
+            total + (asset.mediaType == .video ? videoAvg : photoAvg)
         }
     }
 }
