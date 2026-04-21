@@ -197,6 +197,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 573E50902F14105D00FFABC4 /* Build configuration list for PBXNativeTarget "Prune" */;
 			buildPhases = (
+				41FD7B0EE5974C6AFC1B4EBD /* Guard: Block test AdMob ID in Release */,
 				573E50812F14105B00FFABC4 /* Sources */,
 				573E50822F14105B00FFABC4 /* Frameworks */,
 				573E50832F14105B00FFABC4 /* Resources */,
@@ -281,6 +282,30 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		41FD7B0EE5974C6AFC1B4EBD /* Guard: Block test AdMob ID in Release */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Prune/Info.plist",
+				"$(SRCROOT)/Prune/App/AppConfig.swift",
+			);
+			name = "Guard: Block test AdMob ID in Release";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Fail Release builds that still contain Google's test AdMob app ID or Swift-side test IDs.\nif [ \"$CONFIGURATION\" != \"Release\" ]; then\n  exit 0\nfi\n\nPLIST=\"${SRCROOT}/Prune/Info.plist\"\nCFG=\"${SRCROOT}/Prune/App/AppConfig.swift\"\n\nif grep -q \"3940256099942544\" \"$PLIST\" 2>/dev/null; then\n  echo \"error: Info.plist still contains Google's test AdMob application identifier (3940256099942544). Replace before Release.\" >&2\n  exit 1\nfi\n\nif grep -q \"test_vUZXRnxlzkFvRNLCafoRXltXvgC\" \"$CFG\" 2>/dev/null; then\n  echo \"error: AppConfig.swift still contains RevenueCat sandbox API key (test_vUZXRnxl...). Replace before Release.\" >&2\n  exit 1\nfi\n\nif grep -q \"XXXXXXXXXXXXXXXX\" \"$CFG\" 2>/dev/null; then\n  echo \"error: AppConfig.swift still contains placeholder AdMob IDs (XXXXX). Replace before Release.\" >&2\n  exit 1\nfi\n\necho \"Release guard passed: no placeholder IDs detected.\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		573E50812F14105B00FFABC4 /* Sources */ = {

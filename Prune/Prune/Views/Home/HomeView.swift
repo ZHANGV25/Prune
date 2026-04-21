@@ -121,9 +121,6 @@ struct HomeView: View {
             }
             .task {
                 photoService.checkStatus()
-                if photoService.permissionStatus == .notDetermined {
-                    _ = await photoService.requestAuthorization()
-                }
             }
         }
     }
