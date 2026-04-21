@@ -12,9 +12,9 @@
 		48BC0882EFAAD11B98D551AA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7529FF913DFB60AB7774A9D6 /* Foundation.framework */; };
 		573E50FB2F1559EB00FFABC4 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 573E50FA2F1559EB00FFABC4 /* RevenueCat */; };
 		573E50FD2F1559EB00FFABC4 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 573E50FC2F1559EB00FFABC4 /* RevenueCatUI */; };
-		573E51292F155BF500FFABC4 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 573E51282F155BF500FFABC4 /* GoogleMobileAds */; };
 		7B9A91ADC5E748EE821A332B /* SeenPhotosServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8133177CFEC0794796D51F9F /* SeenPhotosServiceTests.swift */; };
 		AD0F23D73E8600DA3B04C59E /* PruneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F57F103E759A9760AE9568 /* PruneUITests.swift */; };
+		E67E9E786F0AC7AC3451191E /* SwipeGateServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51604047B0C982FEA6FFFA17 /* SwipeGateServiceTests.swift */; };
 		F33A9BACA50568BF0C80C842 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7529FF913DFB60AB7774A9D6 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		3A5C22029DA1ED5DE73BC5F2 /* EstimatedBytesTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EstimatedBytesTests.swift; sourceTree = "<group>"; };
+		51604047B0C982FEA6FFFA17 /* SwipeGateServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SwipeGateServiceTests.swift; sourceTree = "<group>"; };
 		573E50852F14105B00FFABC4 /* Prune.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Prune.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B1C0318508E5289469D0367 /* PruneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PruneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7529FF913DFB60AB7774A9D6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -72,7 +73,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				573E51292F155BF500FFABC4 /* GoogleMobileAds in Frameworks */,
 				573E50FD2F1559EB00FFABC4 /* RevenueCatUI in Frameworks */,
 				573E50FB2F1559EB00FFABC4 /* RevenueCat in Frameworks */,
 			);
@@ -111,6 +111,7 @@
 				8133177CFEC0794796D51F9F /* SeenPhotosServiceTests.swift */,
 				3A5C22029DA1ED5DE73BC5F2 /* EstimatedBytesTests.swift */,
 				9804611F798C4FF030BA0A4F /* TimeframeMatcherTests.swift */,
+				51604047B0C982FEA6FFFA17 /* SwipeGateServiceTests.swift */,
 			);
 			name = PruneTests;
 			path = PruneTests;
@@ -197,7 +198,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 573E50902F14105D00FFABC4 /* Build configuration list for PBXNativeTarget "Prune" */;
 			buildPhases = (
-				41FD7B0EE5974C6AFC1B4EBD /* Guard: Block test AdMob ID in Release */,
+				41FD7B0EE5974C6AFC1B4EBD /* Guard: Block test IDs in Release */,
 				573E50812F14105B00FFABC4 /* Sources */,
 				573E50822F14105B00FFABC4 /* Frameworks */,
 				573E50832F14105B00FFABC4 /* Resources */,
@@ -213,7 +214,6 @@
 			packageProductDependencies = (
 				573E50FA2F1559EB00FFABC4 /* RevenueCat */,
 				573E50FC2F1559EB00FFABC4 /* RevenueCatUI */,
-				573E51282F155BF500FFABC4 /* GoogleMobileAds */,
 			);
 			productName = Prune;
 			productReference = 573E50852F14105B00FFABC4 /* Prune.app */;
@@ -245,7 +245,6 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				573E50F92F1559EB00FFABC4 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
-				573E51272F155BF500FFABC4 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 573E50862F14105B00FFABC4 /* Products */;
@@ -284,7 +283,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		41FD7B0EE5974C6AFC1B4EBD /* Guard: Block test AdMob ID in Release */ = {
+		41FD7B0EE5974C6AFC1B4EBD /* Guard: Block test IDs in Release */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -293,17 +292,16 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Prune/Info.plist",
 				"$(SRCROOT)/Prune/App/AppConfig.swift",
 			);
-			name = "Guard: Block test AdMob ID in Release";
+			name = "Guard: Block test IDs in Release";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Fail Release builds that still contain Google's test AdMob app ID or Swift-side test IDs.\nif [ \"$CONFIGURATION\" != \"Release\" ]; then\n  exit 0\nfi\n\nPLIST=\"${SRCROOT}/Prune/Info.plist\"\nCFG=\"${SRCROOT}/Prune/App/AppConfig.swift\"\n\nif grep -q \"3940256099942544\" \"$PLIST\" 2>/dev/null; then\n  echo \"error: Info.plist still contains Google's test AdMob application identifier (3940256099942544). Replace before Release.\" >&2\n  exit 1\nfi\n\nif grep -q \"test_vUZXRnxlzkFvRNLCafoRXltXvgC\" \"$CFG\" 2>/dev/null; then\n  echo \"error: AppConfig.swift still contains RevenueCat sandbox API key (test_vUZXRnxl...). Replace before Release.\" >&2\n  exit 1\nfi\n\nif grep -q \"XXXXXXXXXXXXXXXX\" \"$CFG\" 2>/dev/null; then\n  echo \"error: AppConfig.swift still contains placeholder AdMob IDs (XXXXX). Replace before Release.\" >&2\n  exit 1\nfi\n\necho \"Release guard passed: no placeholder IDs detected.\"\n";
+			shellScript = "# Fail Release builds that still contain the RevenueCat sandbox API key.\nif [ \"$CONFIGURATION\" != \"Release\" ]; then\n  exit 0\nfi\n\nCFG=\"${SRCROOT}/Prune/App/AppConfig.swift\"\n\nif grep -q \"test_vUZXRnxlzkFvRNLCafoRXltXvgC\" \"$CFG\" 2>/dev/null; then\n  echo \"error: AppConfig.swift still contains RevenueCat sandbox API key. Replace with production public key before Release.\" >&2\n  exit 1\nfi\n\necho \"Release guard passed.\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -330,6 +328,7 @@
 				7B9A91ADC5E748EE821A332B /* SeenPhotosServiceTests.swift in Sources */,
 				06B4CFF65BC396238337701D /* EstimatedBytesTests.swift in Sources */,
 				1C9C724AC72AC25C4BF95E8B /* TimeframeMatcherTests.swift in Sources */,
+				E67E9E786F0AC7AC3451191E /* SwipeGateServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -675,14 +674,6 @@
 				minimumVersion = 5.54.0;
 			};
 		};
-		573E51272F155BF500FFABC4 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 12.14.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -695,11 +686,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 573E50F92F1559EB00FFABC4 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
 			productName = RevenueCatUI;
-		};
-		573E51282F155BF500FFABC4 /* GoogleMobileAds */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 573E51272F155BF500FFABC4 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
-			productName = GoogleMobileAds;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

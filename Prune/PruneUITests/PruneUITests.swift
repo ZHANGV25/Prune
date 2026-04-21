@@ -29,10 +29,8 @@ final class PruneUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Your photos\nstay on device"].waitForExistence(timeout: 2),
                       "Privacy page appears on page 2")
 
-        app.buttons["Continue"].tap()
-
         XCTAssertTrue(app.buttons["Allow Access"].waitForExistence(timeout: 2),
-                      "Allow Access button appears on page 3")
+                      "Allow Access button appears on the final page")
     }
 
     func test_home_loadsAfterOnboarding() throws {

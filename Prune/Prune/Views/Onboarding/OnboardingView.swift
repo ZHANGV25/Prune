@@ -1,6 +1,4 @@
 import SwiftUI
-import AppTrackingTransparency
-import AdSupport
 
 struct OnboardingView: View {
     let onComplete: () -> Void
@@ -9,14 +7,13 @@ struct OnboardingView: View {
     @State private var isRequestingPhoto = false
     @ObservedObject private var photoService = PhotoLibraryService.shared
 
-    private let totalPages = 3
+    private let totalPages = 2
 
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
 
             VStack(spacing: 0) {
-                // Progress dots
                 HStack(spacing: 8) {
                     ForEach(0..<totalPages, id: \.self) { i in
                         Capsule()
@@ -32,8 +29,7 @@ struct OnboardingView: View {
                 Group {
                     switch page {
                     case 0: hookPage
-                    case 1: privacyPage
-                    default: permissionsPage
+                    default: privacyAndPermissionPage
                     }
                 }
                 .transition(.asymmetric(
@@ -49,8 +45,6 @@ struct OnboardingView: View {
             }
         }
     }
-
-    // MARK: - Pages
 
     private var hookPage: some View {
         VStack(spacing: 24) {
@@ -73,7 +67,7 @@ struct OnboardingView: View {
         .padding(.horizontal, 24)
     }
 
-    private var privacyPage: some View {
+    private var privacyAndPermissionPage: some View {
         VStack(spacing: 24) {
             Image(systemName: "lock.shield.fill")
                 .font(.system(size: 80))
@@ -85,32 +79,20 @@ struct OnboardingView: View {
                 .multilineTextAlignment(.center)
                 .lineSpacing(4)
 
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: 14) {
                 privacyBullet("checkmark.circle.fill", "No uploads, no cloud processing")
                 privacyBullet("checkmark.circle.fill", "Uses Apple's Photos framework")
                 privacyBullet("checkmark.circle.fill", "Delete sends to Recently Deleted")
             }
             .padding(.horizontal, 32)
             .padding(.top, 8)
-        }
-        .padding(.horizontal, 24)
-    }
 
-    private var permissionsPage: some View {
-        VStack(spacing: 24) {
-            Image(systemName: "hand.wave.fill")
-                .font(.system(size: 80))
-                .foregroundStyle(LinearGradient(colors: [.orange, .pink], startPoint: .topLeading, endPoint: .bottomTrailing))
-
-            Text("Almost ready")
-                .font(.system(size: 36, weight: .bold))
-                .foregroundColor(.white)
-
-            Text("Next, iOS will ask for access to your photos so Prune can show and delete them. Choose Allow Full Access.")
-                .font(.body)
+            Text("Next, iOS will ask for access to your photos. Choose Allow Full Access.")
+                .font(.callout)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, 32)
+                .padding(.horizontal, 40)
+                .padding(.top, 8)
         }
         .padding(.horizontal, 24)
     }
@@ -126,8 +108,6 @@ struct OnboardingView: View {
             Spacer()
         }
     }
-
-    // MARK: - Bottom action
 
     private var bottomButton: some View {
         Button(action: handleBottomTap) {
@@ -149,10 +129,7 @@ struct OnboardingView: View {
     }
 
     private var buttonTitle: String {
-        switch page {
-        case 0, 1: return "Continue"
-        default: return "Allow Access"
-        }
+        page == 0 ? "Continue" : "Allow Access"
     }
 
     private func handleBottomTap() {
@@ -169,23 +146,9 @@ struct OnboardingView: View {
         isRequestingPhoto = true
         Task {
             _ = await photoService.requestAuthorization()
-            if #available(iOS 14, *) {
-                _ = await ATTrackingManager.requestTrackingAuthorization()
-            }
             isRequestingPhoto = false
             UserDefaults.standard.set(true, forKey: "hasCompletedOnboarding")
             onComplete()
-        }
-    }
-}
-
-@available(iOS 14, *)
-extension ATTrackingManager {
-    static func requestTrackingAuthorization() async -> ATTrackingManager.AuthorizationStatus {
-        await withCheckedContinuation { continuation in
-            ATTrackingManager.requestTrackingAuthorization { status in
-                continuation.resume(returning: status)
-            }
         }
     }
 }
