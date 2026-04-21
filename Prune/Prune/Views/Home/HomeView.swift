@@ -120,8 +120,9 @@ struct HomeView: View {
                 .presentationDetents([.medium, .large])
             }
             .task {
+                photoService.checkStatus()
                 if photoService.permissionStatus == .notDetermined {
-                   _ = await photoService.requestAuthorization()
+                    _ = await photoService.requestAuthorization()
                 }
             }
         }
