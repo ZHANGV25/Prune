@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Privacy Policy — Prune</title>
+<style>
+  :root { --bg:#000; --fg:#eee; --muted:#999; --accent:#6ea8ff; --card:#0f0f0f; --border:#1f1f1f; }
+  * { box-sizing:border-box; }
+  html,body { background:var(--bg); color:var(--fg); font:16px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",sans-serif; margin:0; padding:0; }
+  main { max-width:720px; margin:0 auto; padding:64px 24px 96px; }
+  nav { padding:16px 24px; border-bottom:1px solid var(--border); display:flex; gap:16px; align-items:center; }
+  nav a { color:var(--muted); text-decoration:none; font-size:14px; }
+  nav a:hover { color:var(--fg); }
+  nav .brand { color:var(--fg); font-weight:700; margin-right:auto; }
+  h1 { font-size:36px; margin:0 0 8px; letter-spacing:-0.02em; }
+  h2 { margin-top:48px; font-size:22px; letter-spacing:-0.01em; }
+  h3 { margin-top:32px; font-size:17px; color:var(--fg); }
+  .effective { color:var(--muted); font-size:14px; margin-bottom:32px; }
+  p,li { color:#ccc; }
+  a { color:var(--accent); }
+  ul { padding-left:20px; }
+  li { margin-bottom:8px; }
+  code { background:var(--card); border:1px solid var(--border); padding:2px 6px; border-radius:4px; font-size:14px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px 24px; margin:24px 0; }
+  footer { text-align:center; color:var(--muted); font-size:13px; padding:40px 24px; border-top:1px solid var(--border); }
+</style>
+</head>
+<body>
+<nav>
+  <a class="brand" href="index.html">Prune</a>
+  <a href="privacy.html">Privacy</a>
+  <a href="terms.html">Terms</a>
+  <a href="support.html">Support</a>
+</nav>
+<main>
+
+<h1>Privacy Policy</h1>
+<p class="effective">Effective April 20, 2026</p>
+
+<p>Prune is a photo-cleanup app that runs entirely on your device. This policy explains what data the app accesses, what leaves your device, and who we share it with.</p>
+
+<div class="card">
+  <strong>In one sentence:</strong> Your photos never leave your device. We collect only what's needed to verify subscriptions and diagnose crashes.
+</div>
+
+<h2>1. What the app accesses on your device</h2>
+
+<h3>Photo library</h3>
+<p>Prune reads photos and videos from your Apple Photos library to show them to you for review. When you confirm a deletion, Prune asks the iOS Photos framework to move those items to <strong>Recently Deleted</strong>, where Apple keeps them for 30 days before permanent removal. This is the same behavior as deleting from the Apple Photos app.</p>
+<p><strong>Your photos and videos never leave your device.</strong> Prune does not upload them to any server, and does not analyze them using cloud AI.</p>
+
+<h3>App storage</h3>
+<p>Prune stores a small amount of data on your device using Apple's <code>UserDefaults</code>:</p>
+<ul>
+  <li>Local identifiers of photos you have already reviewed, so we don't show them to you again.</li>
+  <li>A daily counter of swipes used (for the free-tier limit of 50/day).</li>
+  <li>Whether you have completed onboarding, and whether you have an active Pro subscription.</li>
+</ul>
+<p>None of this information is uploaded to us or to third parties.</p>
+
+<h2>2. What leaves your device, and why</h2>
+
+<h3>Subscriptions (RevenueCat)</h3>
+<p>We use <a href="https://www.revenuecat.com/privacy">RevenueCat</a> to manage in-app subscriptions. When you start, cancel, or restore a purchase, a <strong>pseudonymous RevenueCat user ID</strong> and <strong>purchase-history records</strong> are shared with RevenueCat so your Pro status can be verified across sessions and devices.</p>
+<p>RevenueCat does not track you across apps or websites. No advertising identifiers are shared.</p>
+
+<h3>Apple (App Store)</h3>
+<p>In-app purchases are processed by Apple. Your payment information is handled by Apple under <a href="https://www.apple.com/legal/privacy/">Apple's privacy policy</a>; Prune and Isotropic Studios never see your payment details.</p>
+
+<h3>Crash reports and performance data</h3>
+<p>If the app crashes, Apple may send a diagnostic report to us through its standard developer tooling. These reports do not include your photos, and you control this in <strong>Settings &gt; Privacy &amp; Security &gt; Analytics &amp; Improvements &gt; Share with App Developers</strong>.</p>
+
+<h2>3. What we do <em>not</em> do</h2>
+<ul>
+  <li>We do <strong>not</strong> show ads. We do not integrate advertising SDKs.</li>
+  <li>We do <strong>not</strong> track you across other apps or websites.</li>
+  <li>We do <strong>not</strong> collect your Apple advertising identifier (IDFA). Prune does not call the App Tracking Transparency framework.</li>
+  <li>We do <strong>not</strong> upload your photos, videos, or any media content from your library.</li>
+  <li>We do <strong>not</strong> sell your personal information to anyone, under any definition of "sell" used by US state privacy laws.</li>
+</ul>
+
+<h2>4. Children's privacy</h2>
+<p>Prune is rated 4+ and is not directed at children. We do not knowingly collect personal information from anyone under 13.</p>
+
+<h2>5. Your rights</h2>
+<p>Because Prune stores nearly everything locally, the easiest way to "delete your data" is to delete the app from your device. To delete your RevenueCat subscription record, email us at <a href="mailto:vhzhang2020@gmail.com">vhzhang2020@gmail.com</a> with the bundle ID <code>com.isotropicstudios.Prune</code> and the approximate date of purchase.</p>
+
+<p>If you are in California, the EU, the UK, or another jurisdiction with data-protection laws, you have rights to access, correct, port, and delete data we hold about you. Because the only such data is a pseudonymous RevenueCat record tied to your purchase, the easiest path is the email above.</p>
+
+<h2>6. Changes to this policy</h2>
+<p>If we make material changes, we'll update the "Effective" date above and, if you have the app installed, show a notice the next time you open it.</p>
+
+<h2>7. Contact</h2>
+<p>Isotropic Studios<br>
+<a href="mailto:vhzhang2020@gmail.com">vhzhang2020@gmail.com</a></p>
+
+</main>
+<footer>Prune is made by Isotropic Studios. <a href="mailto:vhzhang2020@gmail.com">Contact</a>.</footer>
+</body>
+</html>
