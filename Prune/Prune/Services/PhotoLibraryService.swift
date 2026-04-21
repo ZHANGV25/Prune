@@ -191,17 +191,4 @@ class PhotoLibraryService: ObservableObject {
             PHAssetChangeRequest.deleteAssets(assets as NSArray)
         }
     }
-    
-    // Note: True "Undo" in Photos framework is tricky because once deleted, it goes to "Recently Deleted".
-    // We can't programmatically "un-delete" from Recently Deleted without user interaction strictly speaking,
-    // usually we just stop the deletion from happening if it's "queued".
-    // However, the requirement says "Undo last swipe".
-    // So "Deletion" should probably happen only when the session ends or user explicitly "Commits".
-    // OR we delete immediately and "Undo" means we rely on the fact that we can't easily bring it back?
-    // standard Tinder-style apps usually "queue" actions until a session end or have a "trash can".
-    // BUT requirement says: "Deletions must use PHPhotoLibrary.performChanges deletion APIs."
-    // And "Provide Undo last swipe".
-    // Strategy: We will queue deletions in memory. "Keep" does nothing. "Delete" adds to `deletedAssets` set.
-    // "Undo" removes from `deletedAssets` set.
-    // We commit the actual PHPhotoLibrary changes periodically or on exit/background.
 }
