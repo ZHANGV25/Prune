@@ -15,6 +15,7 @@
 		5EFE897AFA75856A70E84789 /* EndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA745788371130DA97EE8E0 /* EndToEndTests.swift */; };
 		7B9A91ADC5E748EE821A332B /* SeenPhotosServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8133177CFEC0794796D51F9F /* SeenPhotosServiceTests.swift */; };
 		AD0F23D73E8600DA3B04C59E /* PruneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F57F103E759A9760AE9568 /* PruneUITests.swift */; };
+		B24751FD547DD5DD7A008A29 /* ScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B0CB0C95398E8AFD6435F5 /* ScreenshotTests.swift */; };
 		E67E9E786F0AC7AC3451191E /* SwipeGateServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51604047B0C982FEA6FFFA17 /* SwipeGateServiceTests.swift */; };
 		F33A9BACA50568BF0C80C842 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7529FF913DFB60AB7774A9D6 /* Foundation.framework */; };
 /* End PBXBuildFile section */
@@ -47,6 +48,7 @@
 		81F57F103E759A9760AE9568 /* PruneUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PruneUITests.swift; sourceTree = "<group>"; };
 		8FA745788371130DA97EE8E0 /* EndToEndTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EndToEndTests.swift; sourceTree = "<group>"; };
 		9804611F798C4FF030BA0A4F /* TimeframeMatcherTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TimeframeMatcherTests.swift; sourceTree = "<group>"; };
+		A5B0CB0C95398E8AFD6435F5 /* ScreenshotTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ScreenshotTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -153,6 +155,7 @@
 			children = (
 				81F57F103E759A9760AE9568 /* PruneUITests.swift */,
 				8FA745788371130DA97EE8E0 /* EndToEndTests.swift */,
+				A5B0CB0C95398E8AFD6435F5 /* ScreenshotTests.swift */,
 			);
 			name = PruneUITests;
 			path = PruneUITests;
@@ -322,6 +325,7 @@
 			files = (
 				AD0F23D73E8600DA3B04C59E /* PruneUITests.swift in Sources */,
 				5EFE897AFA75856A70E84789 /* EndToEndTests.swift in Sources */,
+				B24751FD547DD5DD7A008A29 /* ScreenshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
