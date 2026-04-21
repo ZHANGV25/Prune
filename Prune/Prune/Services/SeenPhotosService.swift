@@ -4,15 +4,16 @@ import Foundation
 /// Uses UserDefaults for simple persistence.
 class SeenPhotosService {
     static let shared = SeenPhotosService()
-    
+
     private let userDefaultsKey = "seenPhotoIdentifiers"
-    
+    private let defaults: UserDefaults
+
     /// In-memory cache of seen photo IDs for fast lookup
     private var seenIds: Set<String>
-    
-    private init() {
-        // Load from UserDefaults
-        if let stored = UserDefaults.standard.array(forKey: userDefaultsKey) as? [String] {
+
+    init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
+        if let stored = defaults.array(forKey: userDefaultsKey) as? [String] {
             seenIds = Set(stored)
         } else {
             seenIds = []
@@ -58,6 +59,6 @@ class SeenPhotosService {
     }
     
     private func persist() {
-        UserDefaults.standard.set(Array(seenIds), forKey: userDefaultsKey)
+        defaults.set(Array(seenIds), forKey: userDefaultsKey)
     }
 }

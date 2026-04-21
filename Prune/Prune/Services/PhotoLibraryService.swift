@@ -165,12 +165,13 @@ class PhotoLibraryService: ObservableObject {
         }.value
     }
     
-    nonisolated private static func does(_ date: Date, match frame: String, using calendar: Calendar, now: Date) -> Bool {
+    nonisolated static func does(_ date: Date, match frame: String, using calendar: Calendar, now: Date) -> Bool {
         switch frame {
         case "Today":
-            return calendar.isDateInToday(date)
+            return calendar.isDate(date, inSameDayAs: now)
         case "Yesterday":
-            return calendar.isDateInYesterday(date)
+            guard let yesterday = calendar.date(byAdding: .day, value: -1, to: now) else { return false }
+            return calendar.isDate(date, inSameDayAs: yesterday)
         case "Last 7 Days":
             guard let sevenDaysAgo = calendar.date(byAdding: .day, value: -7, to: now) else { return false }
             return date >= sevenDaysAgo
