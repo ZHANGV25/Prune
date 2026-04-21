@@ -12,6 +12,7 @@
 		48BC0882EFAAD11B98D551AA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7529FF913DFB60AB7774A9D6 /* Foundation.framework */; };
 		573E50FB2F1559EB00FFABC4 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 573E50FA2F1559EB00FFABC4 /* RevenueCat */; };
 		573E50FD2F1559EB00FFABC4 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 573E50FC2F1559EB00FFABC4 /* RevenueCatUI */; };
+		5EFE897AFA75856A70E84789 /* EndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA745788371130DA97EE8E0 /* EndToEndTests.swift */; };
 		7B9A91ADC5E748EE821A332B /* SeenPhotosServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8133177CFEC0794796D51F9F /* SeenPhotosServiceTests.swift */; };
 		AD0F23D73E8600DA3B04C59E /* PruneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F57F103E759A9760AE9568 /* PruneUITests.swift */; };
 		E67E9E786F0AC7AC3451191E /* SwipeGateServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51604047B0C982FEA6FFFA17 /* SwipeGateServiceTests.swift */; };
@@ -44,6 +45,7 @@
 		770FB337CE0E61379C5EC8D8 /* PruneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PruneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8133177CFEC0794796D51F9F /* SeenPhotosServiceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SeenPhotosServiceTests.swift; sourceTree = "<group>"; };
 		81F57F103E759A9760AE9568 /* PruneUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PruneUITests.swift; sourceTree = "<group>"; };
+		8FA745788371130DA97EE8E0 /* EndToEndTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EndToEndTests.swift; sourceTree = "<group>"; };
 		9804611F798C4FF030BA0A4F /* TimeframeMatcherTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TimeframeMatcherTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -150,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				81F57F103E759A9760AE9568 /* PruneUITests.swift */,
+				8FA745788371130DA97EE8E0 /* EndToEndTests.swift */,
 			);
 			name = PruneUITests;
 			path = PruneUITests;
@@ -318,6 +321,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD0F23D73E8600DA3B04C59E /* PruneUITests.swift in Sources */,
+				5EFE897AFA75856A70E84789 /* EndToEndTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
