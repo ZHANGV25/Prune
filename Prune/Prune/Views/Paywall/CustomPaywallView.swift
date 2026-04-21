@@ -31,10 +31,10 @@ struct CustomPaywallView: View {
                 
                 // Features
                 VStack(alignment: .leading, spacing: 15) {
-                    FeatureRow(icon: "camera.viewfinder", text: "Clean Screenshots & Selfies")
+                    FeatureRow(icon: "infinity", text: "Unlimited swipes")
+                    FeatureRow(icon: "camera.viewfinder", text: "Screenshots & Selfies")
                     FeatureRow(icon: "play.rectangle.fill", text: "Manage Large Videos")
                     FeatureRow(icon: "calendar", text: "Filter by Date Range")
-                    FeatureRow(icon: "nosign", text: "No Ads")
                 }
                 .padding(.vertical, 30)
                 

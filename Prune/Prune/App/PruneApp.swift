@@ -1,5 +1,4 @@
 import SwiftUI
-import GoogleMobileAds
 
 @main
 struct PruneApp: App {
@@ -8,7 +7,6 @@ struct PruneApp: App {
 
     init() {
         PurchaseService.shared.configure()
-        AdMobService.shared.initialize()
     }
 
     var body: some Scene {
