@@ -78,14 +78,21 @@ Open `APPSTORE_COPY.md`. It contains:
 
 ## Screenshots
 
-Already captured at 1290×2796 (6.9" iPhone Pro Max) and saved to `screenshots/appstore/`:
+Captured at 1320×2868 (iPhone 17 Pro Max, the 6.9" App Store slot) and saved to `screenshots/appstore/`:
 
-- `01-onboarding-hook.png`
-- `02-onboarding-privacy.png`
-- `03-home-feeds.png`
-- `04-paywall.png`
+- `01-onboarding-hook.png` — pure SwiftUI, captured via simctl
+- `02-onboarding-privacy.png` — pure SwiftUI, captured via simctl
+- `03-home-feeds.png` — HomeView with seeded sample data
+- `04-celebration.png` — post-delete celebration, mocked 47 photos / ~141 MB freed
+- `05-paywall.png` — RevenueCat paywall (prices show RC sandbox defaults until prod products ship)
 
 Re-run with `./tools/capture_appstore_screenshots.sh` any time the UI changes.
+
+### One screenshot needs a real device
+
+The swipe deck shot (`06-swipe-deck.png`) is **not** automated. The iOS 26 simulator shows the photo permission dialog even after `simctl privacy grant` and DB erasure; an XCUITest `addUIInterruptionMonitor` dismisses the dialog but `simctl addmedia`'d photos aren't reliably visible to the test host app on this iOS version.
+
+Workaround: plug in a real iPhone, run the app with a populated photo library, open the swipe deck, and capture the screenshot in Xcode → Window → Devices and Simulators → Take Screenshot. Drop the PNG into `screenshots/appstore/06-swipe-deck.png` before running `fastlane release`.
 
 ## Build + ship
 
