@@ -65,6 +65,14 @@ struct CustomPaywallView: View {
                 
                 Spacer()
                 
+                // Apple-required subscription disclosure
+                Text("Subscriptions auto-renew until canceled. Manage or cancel in Settings > Apple ID > Subscriptions.")
+                    .font(.caption2)
+                    .foregroundColor(.gray.opacity(0.8))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 24)
+                    .padding(.top, 8)
+
                 // Footer
                 HStack(spacing: 20) {
                     Button("Restore Purchases") {
@@ -74,12 +82,14 @@ struct CustomPaywallView: View {
                     }
                     .font(.caption)
                     .foregroundColor(.gray)
-                    
-                    Button("Terms & Privacy") {
-                        // Open URL
-                    }
-                    .font(.caption)
-                    .foregroundColor(.gray)
+
+                    Link("Terms of Use", destination: AppConfig.termsOfUseURL)
+                        .font(.caption)
+                        .foregroundColor(.gray)
+
+                    Link("Privacy Policy", destination: AppConfig.privacyPolicyURL)
+                        .font(.caption)
+                        .foregroundColor(.gray)
                 }
                 .padding(.bottom, 20)
             }
