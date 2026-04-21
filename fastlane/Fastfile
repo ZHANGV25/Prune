@@ -1,0 +1,171 @@
+# Fastfile — Prune
+#
+# App Store Connect auth uses an API key stored at
+#   ~/.appstoreconnect/private_keys/AuthKey_PVM59TXT82.p8
+# (committed only as a reference path, not the key itself).
+#
+# Lanes:
+#   status       show whether the app exists in App Store Connect
+#   create_app   register com.isotropicstudios.Prune on ASC if missing
+#   bump         increment build number by timestamp
+#   beta         build + upload to TestFlight
+#   release      push metadata + screenshots (does NOT auto-submit)
+#   screenshot   regenerate App Store screenshots via UI tests
+
+default_platform(:ios)
+
+ASC_KEY_ID = "PVM59TXT82"
+ASC_ISSUER_ID = "b20319f4-0561-4b65-99f3-ef97d3959ee6"
+ASC_KEY_PATH = File.expand_path("~/.appstoreconnect/private_keys/AuthKey_#{ASC_KEY_ID}.p8")
+BUNDLE_ID = "com.isotropicstudios.Prune"
+TEAM_ID = "CAYXPWAU93"
+XCODEPROJ = "Prune/Prune.xcodeproj"
+SCHEME = "Prune"
+APPLE_ID = "vhzhang2020@gmail.com"
+
+def asc_key
+  app_store_connect_api_key(
+    key_id: ASC_KEY_ID,
+    issuer_id: ASC_ISSUER_ID,
+    key_filepath: ASC_KEY_PATH,
+    duration: 1200,
+    in_house: false
+  )
+end
+
+platform :ios do
+  desc "Check whether the app exists on ASC (no side effects)"
+  lane :status do
+    api_key = asc_key
+    require 'spaceship'
+    Spaceship::ConnectAPI.token = Spaceship::ConnectAPI::Token.create(
+      key_id: ASC_KEY_ID,
+      issuer_id: ASC_ISSUER_ID,
+      filepath: ASC_KEY_PATH
+    )
+
+    bundle = Spaceship::ConnectAPI::BundleId.all.find { |b| b.identifier == BUNDLE_ID }
+    if bundle
+      UI.success "Bundle ID #{BUNDLE_ID} is registered on Developer Portal."
+    else
+      UI.important "Bundle ID #{BUNDLE_ID} NOT registered."
+    end
+
+    app = Spaceship::ConnectAPI::App.find(BUNDLE_ID)
+    if app
+      UI.success "App Store Connect app found — id=#{app.id}  name=#{app.name}"
+    else
+      UI.important "App Store Connect app NOT registered yet."
+      UI.important "Apple does not allow API-key creation of new ASC apps."
+      UI.important "Manual step: go to https://appstoreconnect.apple.com/apps"
+      UI.important "  → My Apps → + → New App → select the registered bundle ID,"
+      UI.important "  → name 'Prune: Photo Cleaner', SKU 'prune_001', primary language English."
+      UI.important "Everything else can be automated after that."
+    end
+  end
+
+  desc "Register the app in App Store Connect using the ASC API key (idempotent)"
+  lane :create_app do
+    require 'spaceship'
+    Spaceship::ConnectAPI.token = Spaceship::ConnectAPI::Token.create(
+      key_id: ASC_KEY_ID,
+      issuer_id: ASC_ISSUER_ID,
+      filepath: ASC_KEY_PATH
+    )
+
+    if Spaceship::ConnectAPI::App.find(BUNDLE_ID)
+      UI.important "App #{BUNDLE_ID} already exists — skipping."
+      next
+    end
+
+    # 1. Register bundle ID on Developer Portal if not already
+    existing_bundle = Spaceship::ConnectAPI::BundleId.all.find { |b| b.identifier == BUNDLE_ID }
+    unless existing_bundle
+      UI.message "Registering bundle ID #{BUNDLE_ID}..."
+      Spaceship::ConnectAPI::BundleId.create(
+        name: "Prune",
+        identifier: BUNDLE_ID,
+        platform: "IOS"
+      )
+    end
+
+    # 2. Create the App record in App Store Connect
+    UI.message "Creating App Store Connect app..."
+    app = Spaceship::ConnectAPI::App.create(
+      name: "Prune: Photo Cleaner",
+      version_string: "1.0",
+      sku: "prune_001",
+      primary_locale: "en-US",
+      bundle_id: BUNDLE_ID,
+      platforms: ["IOS"],
+      company_name: "Isotropic Studios"
+    )
+    UI.success "App created: id=#{app.id}"
+  end
+
+  desc "Increment build number to current timestamp"
+  lane :bump do
+    build = ENV["FL_BUILD_NUMBER"] || Time.now.strftime("%y%m%d%H%M")
+    increment_build_number(
+      xcodeproj: XCODEPROJ,
+      build_number: build
+    )
+    UI.message "Bumped build to #{build}"
+  end
+
+  desc "Build Release and upload to TestFlight"
+  lane :beta do
+    bump
+    api_key = asc_key
+
+    build_app(
+      project: XCODEPROJ,
+      scheme: SCHEME,
+      configuration: "Release",
+      clean: true,
+      output_directory: "build/fastlane",
+      xcargs: "-allowProvisioningUpdates",
+      export_method: "app-store",
+      export_options: {
+        method: "app-store",
+        signingStyle: "automatic",
+        teamID: TEAM_ID
+      }
+    )
+
+    upload_to_testflight(
+      api_key: api_key,
+      skip_waiting_for_build_processing: true,
+      distribute_external: false,
+      notify_external_testers: false,
+      changelog: ENV["FL_CHANGELOG"] || "Latest internal build."
+    )
+  end
+
+  desc "Push metadata + screenshots to App Store Connect (no auto-submit)"
+  lane :release do
+    api_key = asc_key
+
+    upload_to_app_store(
+      api_key: api_key,
+      app_identifier: BUNDLE_ID,
+      force: true,
+      precheck_include_in_app_purchases: false,
+      submit_for_review: false,
+      automatic_release: false,
+      skip_binary_upload: true,
+      skip_metadata: false,
+      skip_screenshots: false,
+      metadata_path: "fastlane/metadata",
+      screenshots_path: "fastlane/screenshots",
+      submission_information: {
+        add_id_info_uses_idfa: false,
+        export_compliance_uses_encryption: false
+      }
+    )
+  end
+
+  error do |lane, exception|
+    UI.error "[#{lane}] #{exception.message}"
+  end
+end

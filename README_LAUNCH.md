@@ -1,94 +1,124 @@
-# Prune — Pre-Submission Checklist
+# Prune — Launch checklist
 
-The Debug build uses Google's test AdMob IDs and RevenueCat's sandbox key. A Release
-build is **blocked by a build-phase guard** until you replace them. Work through this
-list before archiving.
+The Debug build uses sandbox credentials. A Release build is **blocked by a build-phase guard** until the RevenueCat sandbox key is swapped for a production key. Most of the App Store plumbing is now automated via Fastlane — see `fastlane/Fastfile` and the lanes below.
 
-## 1. Swap credentials
+## What's automated (already wired up)
 
-### AdMob (Google)
-1. Create an AdMob app at https://apps.admob.com — get the App ID (`ca-app-pub-XXXXXXXXXXXXXXXX~XXXXXXXXXX`).
-2. Create a Native ad unit — get the ad unit ID (`ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX`).
-3. Replace in two places:
-   - `Prune/Prune/Info.plist` → `GADApplicationIdentifier`
-   - `Prune/Prune/App/AppConfig.swift` → `admobAppID` and `admobNativeAdUnitID` (Release branch of `#if DEBUG`)
+- **ASC API key** is installed at `~/.appstoreconnect/private_keys/AuthKey_PVM59TXT82.p8`
+- **Issuer ID** `b20319f4-0561-4b65-99f3-ef97d3959ee6` is hardcoded in the Fastfile
+- **Bundle ID** `com.isotropicstudios.Prune` is registered on the Developer Portal
+- `fastlane status` checks Developer Portal + App Store Connect registration
+- `fastlane bump` sets build number to a timestamp
+- `fastlane beta` builds Release, archives, uploads to TestFlight
+- `fastlane release` pushes metadata + screenshots (does NOT auto-submit — keeps a human in the loop)
+- `tools/capture_appstore_screenshots.sh` regenerates 6.9" iPhone screenshots
 
-### RevenueCat
-1. Create a project at https://app.revenuecat.com, add an iOS app with bundle ID `com.isotropicstudios.Prune`.
-2. Create an Entitlement named `pro` (must match `AppConfig.proEntitlementID`).
-3. Create an Offering with products matching the StoreKit file:
-   `prune_weekly`, `prune_monthly`, `prune_yearly`, `prune_lifetime`.
-4. Attach all four products to the `pro` entitlement.
-5. Copy the **Public App-specific API key** (starts with `appl_`).
-6. Replace `AppConfig.revenueCatAPIKey` in `Prune/Prune/App/AppConfig.swift`.
+## What still requires your clicks
 
-### Legal URLs
-Replace in `AppConfig.swift`:
-- `termsOfUseURL`
-- `privacyPolicyURL`
-- `supportURL`
+### 1. Create the App Store Connect app (one click, Apple policy)
 
-All three must resolve to live pages (no Google Docs). Privacy policy must enumerate AdMob and RevenueCat as third-party SDKs.
+Apple doesn't allow API keys to create new ASC app records (known limitation). Go to https://appstoreconnect.apple.com/apps → **+** → **New App** and fill:
 
-## 2. App Store Connect
+| Field | Value |
+|---|---|
+| Platforms | iOS |
+| Name | Prune: Photo Cleaner |
+| Primary language | English (U.S.) |
+| Bundle ID | `com.isotropicstudios.Prune` (already in dropdown) |
+| SKU | `prune_001` |
+| User access | Full Access |
 
-- Agreements, Tax, Banking — all must be "Active" before submission can proceed.
-- Create the app listing with bundle ID `com.isotropicstudios.Prune`.
-- Create IAP products in App Store Connect with product IDs matching StoreKit:
-  `prune_weekly`, `prune_monthly`, `prune_yearly`, `prune_lifetime`.
-- Create a single Subscription Group ("Prune Pro") containing weekly + monthly + yearly.
-- Attach a screenshot to each subscription product (required for review).
-- Submit your subscription with `prune_weekly` marked as the trial-bearing tier.
+After this, `fastlane status` will show the app and all subsequent steps are scriptable.
 
-## 3. Screenshots
+### 2. RevenueCat — create the iOS app in the Prune project
 
-Apple only requires two sizes in 2026 (downscales the rest):
-- **6.9" iPhone** — 1290×2796 or 1320×2868
-- **13" iPad** — 2064×2752 (required only if you keep iPad support)
+Dashboard → Prune project → **Apps & providers** → **Configurations** → **+ New** → **Apple App Store** → Bundle ID `com.isotropicstudios.Prune`. After that:
 
-1–10 per size, PNG or JPG, no alpha.
+- **API keys** page will show a new `appl_*` public key — paste it into `Prune/Prune/App/AppConfig.swift` (`revenueCatAPIKey`)
+- **Product catalog → Entitlements** → + New → `pro`
+- **Products** → create `prune_weekly`, `prune_monthly`, `prune_yearly`, `prune_lifetime`
+- **Offerings** → default → attach all 4 products; mark `prune_weekly` as featured
+- **Entitlements → pro** → attach all 4 products
 
-## 4. Privacy
+Until then, the `test_vUZXRnxl…` sandbox key works for dev and TestFlight. Before shipping, the Release-build guard script will fail the build until the sandbox key is replaced.
 
-- PrivacyInfo.xcprivacy is already bundled and declares UserDefaults reason, tracking domains, and collected data types.
-- App Privacy nutrition labels in App Store Connect — declare per third party (AdMob tracks; RevenueCat does not).
-- Privacy Policy URL must be reachable and enumerate AdMob + RevenueCat.
+### 3. App Store Connect subscription setup
 
-## 5. TestFlight
+Inside the app record:
 
-1. Archive: Product → Archive (Release configuration).
-2. Upload via Organizer → Distribute App → App Store Connect.
-3. Internal testing (100 Apple IDs on team) — no review.
-4. External testing — first build of each version string requires Beta App Review (typically 24–48 hours).
-5. Fill the "Test Information" block: what to test, demo creds (none needed), contact email. Missing this gets you soft-rejected.
+- **Agreements, Tax, and Banking** must be **Active** (this blocks submission)
+- Create IAP products with IDs matching StoreKit: `prune_weekly`, `prune_monthly`, `prune_yearly`, `prune_lifetime`
+- Create one Subscription Group ("Prune Pro") containing the three auto-renewing subs
+- Attach a review screenshot to each subscription (required)
+- Configure trial: `prune_weekly` has a 3-day free trial
 
-## 6. Common 2025–2026 rejection reasons to watch
+### 4. Legal URLs
 
-- ATT prompt wording that promises a reward ("Allow to unlock…") — rejected under 5.1.1(iv).
-- Paywall missing visible Terms + Privacy links or "X to close" button — #1 paywall rejection.
-- Fabricated scan counts on first launch ("1,247 junk photos found!") — Apple cracked down in 2025.
-- Dead Privacy Policy / Support URL — instant reject.
+Already live at GitHub Pages:
 
-## 7. What's already done
+- https://zhangv25.github.io/Prune/privacy
+- https://zhangv25.github.io/Prune/terms
+- https://zhangv25.github.io/Prune/support
 
-- [x] iOS 17 deployment target, iPhone + iPad, iOS-only platforms
-- [x] PrivacyInfo.xcprivacy with UserDefaults, tracking domains, collected types
-- [x] NSUserTrackingUsageDescription, ITSAppUsesNonExemptEncryption=NO, 50 SKAdNetworkItems
-- [x] Onboarding (3 pages) with ATT pre-prompt
-- [x] Photo permission handled via system dialog after onboarding
+Paste these into App Store Connect's App Information → Privacy Policy URL + Support URL.
+
+## Metadata to copy-paste
+
+Open `APPSTORE_COPY.md`. It contains:
+
+- App name (17 chars, under Apple's 30-char limit)
+- Subtitle options
+- 100-char keyword string
+- Promotional text (170 chars)
+- Full description (2,460 chars)
+- What's New for v1.0
+- Category, age rating, content rights answers
+- App Privacy nutrition-label answers (linked: Purchase History, User ID, Crash Data, Performance Data; no tracking)
+- Review notes for App Review
+
+## Screenshots
+
+Already captured at 1290×2796 (6.9" iPhone Pro Max) and saved to `screenshots/appstore/`:
+
+- `01-onboarding-hook.png`
+- `02-onboarding-privacy.png`
+- `03-home-feeds.png`
+- `04-paywall.png`
+
+Re-run with `./tools/capture_appstore_screenshots.sh` any time the UI changes.
+
+## Build + ship
+
+Once (1) and (2) above are done:
+
+```
+cd "Photo Swiping App"
+fastlane status         # verify everything is registered
+fastlane beta           # archive, sign, upload to TestFlight
+# — test on your iPhone via TestFlight —
+fastlane release        # push metadata + screenshots (still doesn't submit)
+# — go to ASC, review what got pushed, click Submit for Review when ready —
+```
+
+## What's already done in code
+
+- [x] iOS 17 deployment target, iPhone + iPad only, no Mac/Vision
+- [x] PrivacyInfo.xcprivacy (no tracking, UserDefaults reason CA92.1, RC purchase/user-ID as linked non-tracking)
+- [x] Photo library usage description, ITSAppUsesNonExemptEncryption=NO
+- [x] Onboarding (2 pages) ending in photo library permission request
+- [x] Freemium gate: 50 swipes/day free on All Photos; Pro unlocks unlimited + smart feeds
 - [x] Celebration screen post-delete with approximate bytes freed
-- [x] Weekly $6.99 / 3-day-trial tier added to StoreKit (matches category leaders)
-- [x] Terms + Privacy links wired on paywall + subscription auto-renew disclosure
+- [x] Weekly + monthly + yearly + lifetime tiers in `Prune.storekit`
+- [x] Terms + Privacy links + auto-renew disclosure on paywall
 - [x] RevenueCat entitlement normalized to `pro`
-- [x] Build-phase guard blocks Release builds with test IDs
-- [x] 19 unit tests + 3 UI tests, all passing
-- [x] Unit tests caught two real bugs: SeenPhotosService deinit crash (from Swift 6 back-deploy + global MainActor isolation) and does(_:match:...) ignoring injected `now` for Today/Yesterday.
+- [x] Release-build guard blocks ship with sandbox RC key
+- [x] 26 unit tests + 4 UI tests (1 E2E skips gracefully when sim has no photos)
+- [x] GitHub Actions CI builds + tests on push to main
+- [x] Privacy/Terms/Support live on GitHub Pages
 
-## 8. What's not covered by automated tests
+## What's NOT tested by automation (needs real-device TestFlight)
 
-Needs a real-device TestFlight pass on a 5K+ photo library:
-- Swipe performance with a large library
-- Video preloading + playback
-- Ad interleaving + undo-over-ads state machine
-- Actual purchase flow with sandbox Apple ID
-- Permission denial / limited access paths
+- Swipe gesture on a 5K+ photo library (performance, video preload)
+- Actual subscription purchase flow in sandbox
+- Recently Deleted / restore behavior post-commit
+- Limited Access photo permission path
