@@ -1,0 +1,43 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: test-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Build + Test
+    runs-on: macos-15
+    timeout-minutes: 25
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode (latest installed)
+        run: |
+          LATEST=$(ls /Applications | grep -E '^Xcode(_[0-9.]+)?\.app$' | sort -V | tail -1)
+          echo "Using $LATEST"
+          sudo xcode-select -s "/Applications/$LATEST/Contents/Developer"
+          xcodebuild -version
+
+      - name: Resolve SPM dependencies
+        working-directory: Prune
+        run: xcodebuild -resolvePackageDependencies -project Prune.xcodeproj
+
+      - name: Build + Test
+        working-directory: Prune
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project Prune.xcodeproj \
+            -scheme Prune \
+            -destination 'platform=iOS Simulator,OS=latest,name=iPhone 16' \
+            -configuration Debug \
+            test

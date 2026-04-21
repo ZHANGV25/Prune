@@ -1,9 +1,16 @@
 import SwiftUI
 
 struct OnboardingView: View {
+    let forcedPage: Int?
     let onComplete: () -> Void
 
-    @State private var page: Int = 0
+    init(forcedPage: Int? = nil, onComplete: @escaping () -> Void) {
+        self.forcedPage = forcedPage
+        self.onComplete = onComplete
+        self._page = State(initialValue: forcedPage ?? 0)
+    }
+
+    @State private var page: Int
     @State private var isRequestingPhoto = false
     @ObservedObject private var photoService = PhotoLibraryService.shared
 
