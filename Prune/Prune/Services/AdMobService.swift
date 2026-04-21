@@ -3,7 +3,8 @@ import GoogleMobileAds
 import UIKit
 import Combine
 
-class AdMobService: NSObject, ObservableObject {
+@MainActor
+final class AdMobService: NSObject, ObservableObject {
     static let shared = AdMobService()
     
     private var adLoader: AdLoader?
