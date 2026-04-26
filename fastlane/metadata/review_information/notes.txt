@@ -1,0 +1,11 @@
+Prune is a photo-cleanup utility with a Tinder-style swipe interface. To test:
+
+1. Grant photo library access on first launch.
+2. Tap "All Photos" on the home screen.
+3. Swipe right to keep, left to delete.
+4. Tap back (top left). Review the deletion grid. Tap "Delete" to confirm.
+5. The photos go to Recently Deleted, where iOS keeps them 30 days. No uploads.
+
+Pro features (smart feeds by date range, screenshots, selfies, videos, favorites) require a subscription. StoreKit sandbox testers can buy a subscription without being charged.
+
+Questions: vhzhang2020@gmail.com

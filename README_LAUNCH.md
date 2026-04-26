@@ -13,13 +13,25 @@ The Debug build uses sandbox credentials. A Release build is **blocked by a buil
 - `fastlane release` pushes metadata + screenshots (does NOT auto-submit — keeps a human in the loop)
 - `tools/capture_appstore_screenshots.sh` regenerates 6.9" iPhone screenshots
 
-## What still requires your clicks
+## Already pushed to App Store Connect via `fastlane release`
 
-### 1. ~~Create the App Store Connect app~~ ✓ already done
+These are LIVE on the v1.0 record at https://appstoreconnect.apple.com/apps/6757726140 — verified via `fastlane probe`:
 
-The "Pruned" app record already exists in App Store Connect (id `6757726140`, bundle `com.isotropic.prune`, SKU `Prune`). Verified via `fastlane status`.
+- ✓ App name (`Prune: Photo Cleaner`), subtitle, primary + secondary categories
+- ✓ Description (2,357 chars)
+- ✓ Keywords (91 chars: `photo,cleaner,cleanup,swipe,delete,storage,declutter,duplicate,screenshots,selfies,organize`)
+- ✓ Promotional text
+- ✓ Privacy / support / marketing URLs (all live on GH Pages)
+- ✓ 5 of 6 screenshots uploaded to the iPhone 6.9" slot (1320×2868)
+- ✓ Copyright notice
 
-### 2. RevenueCat — create the iOS app in the Prune project
+## What still requires you (in dependency order)
+
+### 1. Phone number for App Review contact (1 min)
+
+The only piece of metadata `fastlane release` couldn't push. Apple validates the format strictly. Drop your phone (e.g. `+1 555 123 4567`) into `fastlane/metadata/review_information/phone_number.txt` and re-run `fastlane release` — it'll succeed this time.
+
+### 2. RevenueCat dashboard (5–10 min, gives you the prod key)
 
 Dashboard → Prune project → **Apps & providers** → **Configurations** → **+ New** → **Apple App Store** → Bundle ID `com.isotropic.prune`. After that:
 
@@ -29,27 +41,23 @@ Dashboard → Prune project → **Apps & providers** → **Configurations** → 
 - **Offerings** → default → attach all 4 products; mark `prune_weekly` as featured
 - **Entitlements → pro** → attach all 4 products
 
-Until then, the `test_vUZXRnxl…` sandbox key works for dev and TestFlight. Before shipping, the Release-build guard script will fail the build until the sandbox key is replaced.
+Until then, the `test_vUZXRnxl…` sandbox key works for dev and TestFlight. The Release-build guard will fail the build until the sandbox key is replaced.
 
-### 3. App Store Connect subscription setup
+### 3. App Store Connect — IAPs, Agreements, Privacy (15 min)
 
 Inside the app record:
 
-- **Agreements, Tax, and Banking** must be **Active** (this blocks submission)
-- Create IAP products with IDs matching StoreKit: `prune_weekly`, `prune_monthly`, `prune_yearly`, `prune_lifetime`
-- Create one Subscription Group ("Prune Pro") containing the three auto-renewing subs
-- Attach a review screenshot to each subscription (required)
-- Configure trial: `prune_weekly` has a 3-day free trial
+- **Agreements, Tax, and Banking** → **Active** (Apple-side delay can be 24–48h after submission)
+- **In-App Purchases** → create products matching the StoreKit IDs: `prune_weekly`, `prune_monthly`, `prune_yearly`, `prune_lifetime`
+- **Subscription Group** → "Prune Pro" containing the three auto-renewing subs (lifetime is non-consumable)
+- Attach a review screenshot to each subscription/IAP (use `screenshots/appstore/05-paywall.png` for all four)
+- Set trial on `prune_weekly`: 3 days free
+- **App Privacy** → fill nutrition label per `APPSTORE_COPY.md` § "Privacy" (Purchase History + User ID + Crash + Performance = linked, not tracking)
+- **Age Rating** → 4+, all questionnaire answers None
 
-### 4. Legal URLs
+### 4. The 6th screenshot (real-device capture)
 
-Already live at GitHub Pages:
-
-- https://zhangv25.github.io/Prune/privacy
-- https://zhangv25.github.io/Prune/terms
-- https://zhangv25.github.io/Prune/support
-
-Paste these into App Store Connect's App Information → Privacy Policy URL + Support URL.
+The swipe deck shot (`06-swipe-deck.png`) needs a real iPhone — iOS 26 simulator can't reliably render it via XCUITest. After `fastlane beta` installs to TestFlight, screenshot from device, drop into `screenshots/appstore/06-swipe-deck.png`, and re-run `fastlane upload_screens`.
 
 ## Metadata to copy-paste
 
@@ -83,18 +91,30 @@ The swipe deck shot (`06-swipe-deck.png`) is **not** automated. The iOS 26 simul
 
 Workaround: plug in a real iPhone, run the app with a populated photo library, open the swipe deck, and capture the screenshot in Xcode → Window → Devices and Simulators → Take Screenshot. Drop the PNG into `screenshots/appstore/06-swipe-deck.png` before running `fastlane release`.
 
-## Build + ship
-
-Once (1) and (2) above are done:
+## Build + ship (the rest of the sequence)
 
 ```
 cd "Photo Swiping App"
-fastlane status         # verify everything is registered
-fastlane beta           # archive, sign, upload to TestFlight
-# — test on your iPhone via TestFlight —
-fastlane release        # push metadata + screenshots (still doesn't submit)
-# — go to ASC, review what got pushed, click Submit for Review when ready —
+fastlane probe          # confirms what's currently in ASC
+# After (1)+(2)+(3) above:
+fastlane beta           # archives Release, uploads to TestFlight (Apple-signed automatically)
+# Test on your iPhone via TestFlight, capture 06-swipe-deck.png from device
+fastlane upload_screens # re-pushes the now-complete 6 screenshots
+# Then in ASC: review version 1.0 → Add for Review → Submit for Review
 ```
+
+## Fastlane lanes available
+
+| Lane | What it does |
+|---|---|
+| `status` | Bundle ID + ASC app registration check |
+| `probe` | Dump current metadata/version/build state from ASC |
+| `inventory` | List every app + bundle ID this API key can see |
+| `bump` | Increment build number to current timestamp |
+| `beta` | Archive Release config and upload to TestFlight |
+| `upload_screens` | Push only screenshots (skip metadata) |
+| `release` | Push metadata + screenshots, no auto-submit |
+| `create_app` | (No longer needed — app already exists) |
 
 ## What's already done in code
 
