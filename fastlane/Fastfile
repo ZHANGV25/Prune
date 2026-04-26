@@ -64,6 +64,65 @@ platform :ios do
     end
   end
 
+  desc "Probe everything the API can see about the Pruned app record"
+  lane :probe do
+    asc_key
+    require 'spaceship'
+    Spaceship::ConnectAPI.token = Spaceship::ConnectAPI::Token.create(
+      key_id: ASC_KEY_ID,
+      issuer_id: ASC_ISSUER_ID,
+      filepath: ASC_KEY_PATH
+    )
+    app = Spaceship::ConnectAPI::App.find(BUNDLE_ID)
+    UI.user_error!("App not found for #{BUNDLE_ID}") unless app
+
+    UI.message "App: #{app.name} (id=#{app.id}, sku=#{app.sku}, bundle=#{app.bundle_id})"
+    UI.message "  primary_locale: #{app.primary_locale}"
+    UI.message "  content_rights_declaration: #{app.content_rights_declaration}"
+
+    UI.message "--- App Info ---"
+    begin
+      app.fetch_app_infos.each do |info|
+        UI.message "  state=#{info.app_store_state} primary_category=#{info.primary_category&.id} secondary_category=#{info.secondary_category&.id}"
+      end
+    rescue => e
+      UI.message "  (no app infos: #{e.message})"
+    end
+
+    UI.message "--- App Store Versions ---"
+    app.get_app_store_versions.each do |v|
+      UI.message "  v=#{v.version_string} state=#{v.app_store_state} platform=#{v.platform}"
+      v.get_app_store_version_localizations.each do |loc|
+        snippet = (loc.description || "").to_s[0,40]
+        UI.message "    [#{loc.locale}] keywords=#{(loc.keywords||'').size}c desc=#{(loc.description||'').size}c whatsnew=#{(loc.whats_new||'').size}c support_url=#{loc.support_url.inspect}"
+      end
+    end
+
+    UI.message "--- Builds ---"
+    app.get_builds(limit: 5).each do |b|
+      UI.message "  v=#{b.version} processing=#{b.processing_state} uploaded=#{b.uploaded_date}"
+    end
+
+    UI.message "--- IAP / Subscriptions ---"
+    begin
+      iaps = Spaceship::ConnectAPI::InAppPurchase.all(filter: { app: app.id })
+      UI.message "  in-app purchases: #{iaps.size}"
+      iaps.each { |p| UI.message "    #{p.product_id}  state=#{p.state}  type=#{p.in_app_purchase_type}" }
+    rescue => e
+      UI.message "  IAP query failed: #{e.message}"
+    end
+    begin
+      sgroups = Spaceship::ConnectAPI::SubscriptionGroup.all(filter: { app: app.id })
+      UI.message "  subscription groups: #{sgroups.size}"
+      sgroups.each do |g|
+        UI.message "    group: #{g.reference_name}"
+        g.get_subscriptions.each { |s| UI.message "      #{s.product_id}  state=#{s.state}" }
+      end
+    rescue => e
+      UI.message "  Subscription group query failed: #{e.message}"
+    end
+  end
+
   desc "List all apps + bundle IDs visible to this API key"
   lane :inventory do
     api_key = asc_key
@@ -161,6 +220,24 @@ platform :ios do
     )
   end
 
+  desc "Push only screenshots (no metadata, no review info)"
+  lane :upload_screens do
+    api_key = asc_key
+    upload_to_app_store(
+      api_key: api_key,
+      app_identifier: BUNDLE_ID,
+      force: true,
+      submit_for_review: false,
+      automatic_release: false,
+      skip_binary_upload: true,
+      skip_metadata: true,
+      skip_screenshots: false,
+      screenshots_path: "fastlane/screenshots",
+      run_precheck_before_submit: false,
+      overwrite_screenshots: true
+    )
+  end
+
   desc "Push metadata + screenshots to App Store Connect (no auto-submit)"
   lane :release do
     api_key = asc_key
@@ -177,6 +254,7 @@ platform :ios do
       skip_screenshots: false,
       metadata_path: "fastlane/metadata",
       screenshots_path: "fastlane/screenshots",
+      run_precheck_before_submit: false,
       submission_information: {
         add_id_info_uses_idfa: false,
         export_compliance_uses_encryption: false

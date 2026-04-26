@@ -1,0 +1,50 @@
+Prune is the fastest way to clean up your iPhone's photo library. Swipe right to keep, left to delete — just like dating apps, but for your camera roll. Everything runs on your device. Nothing gets uploaded.
+
+When you're done swiping, Prune shows you a final review grid. Confirm, and it moves the photos you picked into Apple's Recently Deleted album — where they sit for 30 days before permanent removal, exactly like deleting in the Apple Photos app. You can always change your mind.
+
+WHY PEOPLE USE PRUNE
+
+• It turns "one day I'll clean this up" into "ten minutes of swiping before bed."
+• It shows you how much storage you just freed, so the work feels worth it.
+• It never, ever uploads your photos. No cloud AI. No sync. No "we take privacy seriously" claims with asterisks.
+
+FREE TIER
+
+• 50 swipes per day on the All Photos feed
+• Full review screen and undo
+• Storage-saved counter
+
+PRO — OPTIONAL
+
+• Unlimited swipes
+• Smart feeds: clean by date range (month-by-month), Today, Screenshots, Selfies, Videos, Favorites
+• 3-day free trial on the weekly plan
+
+PRIVACY FIRST
+
+• Zero photo uploads. Prune uses Apple's Photos framework to read and delete, the same one the Apple Photos app uses.
+• No ads. No tracking. No advertising SDKs. No IDFA.
+• The only data that leaves your device is your RevenueCat purchase ID, so we can verify your Pro subscription across installs.
+
+HOW IT WORKS
+
+1. Open a feed — All Photos, or any smart feed if you're Pro.
+2. Swipe right to keep, left to delete. Undo with a tap. Favorite with a double-tap.
+3. When you're done (or hit the back button), Prune shows a grid of everything you marked for deletion. Review it.
+4. Tap "Delete" and the photos go to Recently Deleted. You keep 30 days to recover anything.
+
+SUBSCRIPTIONS
+
+Prune Pro is offered as:
+• Weekly, with a 3-day free trial, then auto-renewing weekly
+• Monthly, auto-renewing monthly
+• Yearly, with an introductory offer, auto-renewing yearly
+• Lifetime, one-time purchase
+
+Auto-renewing subscriptions renew until canceled. Cancel any time in Settings > your Apple ID > Subscriptions. Payment is charged to your Apple ID on purchase confirmation.
+
+Terms of Use: https://zhangv25.github.io/Prune/terms
+Privacy Policy: https://zhangv25.github.io/Prune/privacy
+Support: vhzhang2020@gmail.com
+
+Made by Isotropic Studios. Thank you for keeping your photos tidy.
