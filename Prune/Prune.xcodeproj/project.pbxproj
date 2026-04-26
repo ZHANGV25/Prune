@@ -367,7 +367,7 @@
 				DEVELOPMENT_TEAM = CAYXPWAU93;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.isotropicstudios.PruneTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.isotropic.pruneTests;
 				PRODUCT_MODULE_NAME = PruneTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -519,7 +519,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.isotropicstudios.Prune;
+				PRODUCT_BUNDLE_IDENTIFIER = com.isotropic.prune;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -556,7 +556,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.isotropicstudios.Prune;
+				PRODUCT_BUNDLE_IDENTIFIER = com.isotropic.prune;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -577,7 +577,7 @@
 				DEVELOPMENT_TEAM = CAYXPWAU93;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.isotropicstudios.PruneUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.isotropic.pruneUITests;
 				PRODUCT_MODULE_NAME = PruneUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -598,7 +598,7 @@
 				DEVELOPMENT_TEAM = CAYXPWAU93;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.isotropicstudios.PruneTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.isotropic.pruneTests;
 				PRODUCT_MODULE_NAME = PruneTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -619,7 +619,7 @@
 				DEVELOPMENT_TEAM = CAYXPWAU93;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.isotropicstudios.PruneUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.isotropic.pruneUITests;
 				PRODUCT_MODULE_NAME = PruneUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;

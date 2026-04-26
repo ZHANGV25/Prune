@@ -6,7 +6,7 @@ The Debug build uses sandbox credentials. A Release build is **blocked by a buil
 
 - **ASC API key** is installed at `~/.appstoreconnect/private_keys/AuthKey_PVM59TXT82.p8`
 - **Issuer ID** `b20319f4-0561-4b65-99f3-ef97d3959ee6` is hardcoded in the Fastfile
-- **Bundle ID** `com.isotropicstudios.Prune` is registered on the Developer Portal
+- **Bundle ID** `com.isotropic.prune` is registered on the Developer Portal
 - `fastlane status` checks Developer Portal + App Store Connect registration
 - `fastlane bump` sets build number to a timestamp
 - `fastlane beta` builds Release, archives, uploads to TestFlight
@@ -15,24 +15,13 @@ The Debug build uses sandbox credentials. A Release build is **blocked by a buil
 
 ## What still requires your clicks
 
-### 1. Create the App Store Connect app (one click, Apple policy)
+### 1. ~~Create the App Store Connect app~~ ✓ already done
 
-Apple doesn't allow API keys to create new ASC app records (known limitation). Go to https://appstoreconnect.apple.com/apps → **+** → **New App** and fill:
-
-| Field | Value |
-|---|---|
-| Platforms | iOS |
-| Name | Prune: Photo Cleaner |
-| Primary language | English (U.S.) |
-| Bundle ID | `com.isotropicstudios.Prune` (already in dropdown) |
-| SKU | `prune_001` |
-| User access | Full Access |
-
-After this, `fastlane status` will show the app and all subsequent steps are scriptable.
+The "Pruned" app record already exists in App Store Connect (id `6757726140`, bundle `com.isotropic.prune`, SKU `Prune`). Verified via `fastlane status`.
 
 ### 2. RevenueCat — create the iOS app in the Prune project
 
-Dashboard → Prune project → **Apps & providers** → **Configurations** → **+ New** → **Apple App Store** → Bundle ID `com.isotropicstudios.Prune`. After that:
+Dashboard → Prune project → **Apps & providers** → **Configurations** → **+ New** → **Apple App Store** → Bundle ID `com.isotropic.prune`. After that:
 
 - **API keys** page will show a new `appl_*` public key — paste it into `Prune/Prune/App/AppConfig.swift` (`revenueCatAPIKey`)
 - **Product catalog → Entitlements** → + New → `pro`
