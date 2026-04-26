@@ -7,7 +7,7 @@
 set -e
 
 DEVICE="C4A11927-3D9A-421F-AD66-DFB97796EA6F"  # iPhone 17 Pro Max, iOS 26.1
-BUNDLE="com.isotropicstudios.Prune"
+BUNDLE="com.isotropic.prune"
 APP_PATH="/Users/victor/Library/Developer/Xcode/DerivedData/Prune-gfseusqpfpgnvwgqfcdramosyrme/Build/Products/Debug-iphonesimulator/Prune.app"
 OUT="$(pwd)/screenshots/appstore"
 mkdir -p "$OUT"

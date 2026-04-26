@@ -6,7 +6,7 @@
 #
 # Lanes:
 #   status       show whether the app exists in App Store Connect
-#   create_app   register com.isotropicstudios.Prune on ASC if missing
+#   create_app   register com.isotropic.prune on ASC if missing
 #   bump         increment build number by timestamp
 #   beta         build + upload to TestFlight
 #   release      push metadata + screenshots (does NOT auto-submit)
@@ -17,7 +17,7 @@ default_platform(:ios)
 ASC_KEY_ID = "PVM59TXT82"
 ASC_ISSUER_ID = "b20319f4-0561-4b65-99f3-ef97d3959ee6"
 ASC_KEY_PATH = File.expand_path("~/.appstoreconnect/private_keys/AuthKey_#{ASC_KEY_ID}.p8")
-BUNDLE_ID = "com.isotropicstudios.Prune"
+BUNDLE_ID = "com.isotropic.prune"
 TEAM_ID = "CAYXPWAU93"
 XCODEPROJ = "Prune/Prune.xcodeproj"
 SCHEME = "Prune"
@@ -61,6 +61,25 @@ platform :ios do
       UI.important "  → My Apps → + → New App → select the registered bundle ID,"
       UI.important "  → name 'Prune: Photo Cleaner', SKU 'prune_001', primary language English."
       UI.important "Everything else can be automated after that."
+    end
+  end
+
+  desc "List all apps + bundle IDs visible to this API key"
+  lane :inventory do
+    api_key = asc_key
+    require 'spaceship'
+    Spaceship::ConnectAPI.token = Spaceship::ConnectAPI::Token.create(
+      key_id: ASC_KEY_ID,
+      issuer_id: ASC_ISSUER_ID,
+      filepath: ASC_KEY_PATH
+    )
+    UI.message "=== Apps ==="
+    Spaceship::ConnectAPI::App.all.each do |app|
+      UI.message "  id=#{app.id}  name=#{app.name.inspect}  bundle=#{app.bundle_id.inspect}  sku=#{app.sku}"
+    end
+    UI.message "=== Bundle IDs ==="
+    Spaceship::ConnectAPI::BundleId.all.each do |b|
+      UI.message "  #{b.identifier}  (name=#{b.name.inspect})"
     end
   end
 
