@@ -24,12 +24,13 @@ These are LIVE on the v1.0 record at https://appstoreconnect.apple.com/apps/6757
 - ✓ Privacy / support / marketing URLs (all live on GH Pages)
 - ✓ 5 of 6 screenshots uploaded to the iPhone 6.9" slot (1320×2868)
 - ✓ Copyright notice
+- ✓ App Review contact (name, email, phone, notes)
+
+> **Note:** `fastlane/metadata/review_information/phone_number.txt` is gitignored
+> (this is a public repo). Add the file locally before running `fastlane release`
+> on a new machine.
 
 ## What still requires you (in dependency order)
-
-### 1. Phone number for App Review contact (1 min)
-
-The only piece of metadata `fastlane release` couldn't push. Apple validates the format strictly. Drop your phone (e.g. `+1 555 123 4567`) into `fastlane/metadata/review_information/phone_number.txt` and re-run `fastlane release` — it'll succeed this time.
 
 ### 2. RevenueCat dashboard (5–10 min, gives you the prod key)
 
