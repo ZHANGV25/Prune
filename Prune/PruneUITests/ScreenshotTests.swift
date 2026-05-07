@@ -10,30 +10,15 @@ final class ScreenshotTests: XCTestCase {
         continueAfterFailure = false
     }
 
-    /// Swipe deck with seeded photos. XCUITest handles the system photo permission
-    /// dialog via addUIInterruptionMonitor — something simctl grant cannot reliably do.
+    /// Swipe deck mock. Bypasses PHPhotoLibrary via -UITEST_SCREENSHOT_DECK
+    /// so the simulator never shows the permission dialog and no real photos
+    /// are needed. Renders a procedural sunset-mountain "photo" with the deck
+    /// chrome (back button, counter, KEEP/DELETE labels, mid-swipe indicator).
     func test_capture_swipeDeck() throws {
         let app = XCUIApplication()
-        app.launchArguments += ["-UITEST_OPEN_DECK"]
-
-        let monitor = addUIInterruptionMonitor(withDescription: "Photo permission") { alert in
-            let buttons = ["Allow Full Access", "Allow", "OK"]
-            for title in buttons {
-                if alert.buttons[title].exists {
-                    alert.buttons[title].tap()
-                    return true
-                }
-            }
-            return false
-        }
-        defer { removeUIInterruptionMonitor(monitor) }
-
+        app.launchArguments += ["-UITEST_SCREENSHOT_DECK"]
         app.launch()
-        app.tap()  // trigger interruption monitor if dialog is present
         sleep(1)
-        app.tap()
-        sleep(4)  // let deck load photo
-
         attachScreenshot(name: "06-swipe-deck")
     }
 

@@ -10,8 +10,6 @@
 		06B4CFF65BC396238337701D /* EstimatedBytesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5C22029DA1ED5DE73BC5F2 /* EstimatedBytesTests.swift */; };
 		1C9C724AC72AC25C4BF95E8B /* TimeframeMatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9804611F798C4FF030BA0A4F /* TimeframeMatcherTests.swift */; };
 		48BC0882EFAAD11B98D551AA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7529FF913DFB60AB7774A9D6 /* Foundation.framework */; };
-		573E50FB2F1559EB00FFABC4 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 573E50FA2F1559EB00FFABC4 /* RevenueCat */; };
-		573E50FD2F1559EB00FFABC4 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 573E50FC2F1559EB00FFABC4 /* RevenueCatUI */; };
 		5EFE897AFA75856A70E84789 /* EndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA745788371130DA97EE8E0 /* EndToEndTests.swift */; };
 		7B9A91ADC5E748EE821A332B /* SeenPhotosServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8133177CFEC0794796D51F9F /* SeenPhotosServiceTests.swift */; };
 		AD0F23D73E8600DA3B04C59E /* PruneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F57F103E759A9760AE9568 /* PruneUITests.swift */; };
@@ -77,8 +75,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				573E50FD2F1559EB00FFABC4 /* RevenueCatUI in Frameworks */,
-				573E50FB2F1559EB00FFABC4 /* RevenueCat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,7 +200,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 573E50902F14105D00FFABC4 /* Build configuration list for PBXNativeTarget "Prune" */;
 			buildPhases = (
-				41FD7B0EE5974C6AFC1B4EBD /* Guard: Block test IDs in Release */,
 				573E50812F14105B00FFABC4 /* Sources */,
 				573E50822F14105B00FFABC4 /* Frameworks */,
 				573E50832F14105B00FFABC4 /* Resources */,
@@ -218,8 +213,6 @@
 			);
 			name = Prune;
 			packageProductDependencies = (
-				573E50FA2F1559EB00FFABC4 /* RevenueCat */,
-				573E50FC2F1559EB00FFABC4 /* RevenueCatUI */,
 			);
 			productName = Prune;
 			productReference = 573E50852F14105B00FFABC4 /* Prune.app */;
@@ -250,7 +243,6 @@
 			mainGroup = 573E507C2F14105B00FFABC4;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				573E50F92F1559EB00FFABC4 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 573E50862F14105B00FFABC4 /* Products */;
@@ -287,29 +279,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		41FD7B0EE5974C6AFC1B4EBD /* Guard: Block test IDs in Release */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Prune/App/AppConfig.swift",
-			);
-			name = "Guard: Block test IDs in Release";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Fail Release builds that still contain the RevenueCat sandbox API key.\nif [ \"$CONFIGURATION\" != \"Release\" ]; then\n  exit 0\nfi\n\nCFG=\"${SRCROOT}/Prune/App/AppConfig.swift\"\n\nif grep -q \"test_vUZXRnxlzkFvRNLCafoRXltXvgC\" \"$CFG\" 2>/dev/null; then\n  echo \"error: AppConfig.swift still contains RevenueCat sandbox API key. Replace with production public key before Release.\" >&2\n  exit 1\nfi\n\necho \"Release guard passed.\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		573E50812F14105B00FFABC4 /* Sources */ = {
@@ -673,29 +642,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		573E50F92F1559EB00FFABC4 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.54.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		573E50FA2F1559EB00FFABC4 /* RevenueCat */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 573E50F92F1559EB00FFABC4 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
-			productName = RevenueCat;
-		};
-		573E50FC2F1559EB00FFABC4 /* RevenueCatUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 573E50F92F1559EB00FFABC4 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
-			productName = RevenueCatUI;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 573E507D2F14105B00FFABC4 /* Project object */;
 }

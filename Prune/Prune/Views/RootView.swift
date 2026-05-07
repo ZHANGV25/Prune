@@ -7,6 +7,7 @@ struct RootView: View {
     @State private var forceOnboardingPage: Int? = RootView.forcedOnboardingPage()
     @State private var forceCelebration: Bool = RootView.shouldForceCelebration()
     @State private var forceDeck: Bool = RootView.shouldForceDeck()
+    @State private var forceScreenshotDeck: Bool = RootView.shouldForceScreenshotDeck()
 
     private static let args = ProcessInfo.processInfo.arguments
 
@@ -37,6 +38,10 @@ struct RootView: View {
         args.contains("-UITEST_OPEN_DECK")
     }
 
+    private static func shouldForceScreenshotDeck() -> Bool {
+        args.contains("-UITEST_SCREENSHOT_DECK")
+    }
+
     private static func forcedOnboardingPage() -> Int? {
         if args.contains("-UITEST_ONBOARD_P2") { return 1 }
         if args.contains("-UITEST_ONBOARD_P1") { return 0 }
@@ -45,7 +50,9 @@ struct RootView: View {
 
     var body: some View {
         ZStack {
-            if forceCelebration {
+            if forceScreenshotDeck {
+                MockDeckView()
+            } else if forceCelebration {
                 CelebrationView(
                     deletedCount: 47,
                     approxBytesFreed: 47 * 3 * 1_048_576,  // ~141 MB
