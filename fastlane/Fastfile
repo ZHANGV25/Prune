@@ -103,20 +103,26 @@ platform :ios do
       UI.message "  v=#{b.version} processing=#{b.processing_state} uploaded=#{b.uploaded_date}"
     end
 
-    UI.message "--- IAP / Subscriptions ---"
+    UI.message "--- IAP / Subscriptions (raw REST) ---"
+    require_relative '../tools/asc_iaps'
+    rc = ASCIaps.client
     begin
-      iaps = Spaceship::ConnectAPI::InAppPurchase.all(filter: { app: app.id })
-      UI.message "  in-app purchases: #{iaps.size}"
-      iaps.each { |p| UI.message "    #{p.product_id}  state=#{p.state}  type=#{p.in_app_purchase_type}" }
+      iaps = ASCIaps.get_all(rc, "v1/apps/#{app.id}/inAppPurchasesV2",
+                              "fields[inAppPurchases]" => "productId,state,inAppPurchaseType")
+      UI.message "  in-app purchases (v2): #{iaps.size}"
+      iaps.each { |p| UI.message "    #{p.dig('attributes','productId')}  state=#{p.dig('attributes','state')}  type=#{p.dig('attributes','inAppPurchaseType')}" }
     rescue => e
       UI.message "  IAP query failed: #{e.message}"
     end
     begin
-      sgroups = Spaceship::ConnectAPI::SubscriptionGroup.all(filter: { app: app.id })
-      UI.message "  subscription groups: #{sgroups.size}"
-      sgroups.each do |g|
-        UI.message "    group: #{g.reference_name}"
-        g.get_subscriptions.each { |s| UI.message "      #{s.product_id}  state=#{s.state}" }
+      groups = ASCIaps.get_all(rc, "v1/apps/#{app.id}/subscriptionGroups",
+                                "fields[subscriptionGroups]" => "referenceName")
+      UI.message "  subscription groups: #{groups.size}"
+      groups.each do |g|
+        UI.message "    group: #{g.dig('attributes','referenceName')}"
+        subs = ASCIaps.get_all(rc, "v1/subscriptionGroups/#{g['id']}/subscriptions",
+                                "fields[subscriptions]" => "productId,state,subscriptionPeriod")
+        subs.each { |s| UI.message "      #{s.dig('attributes','productId')}  state=#{s.dig('attributes','state')}  period=#{s.dig('attributes','subscriptionPeriod')}" }
       end
     rescue => e
       UI.message "  Subscription group query failed: #{e.message}"
@@ -218,6 +224,14 @@ platform :ios do
       notify_external_testers: false,
       changelog: ENV["FL_CHANGELOG"] || "Latest internal build."
     )
+  end
+
+  desc "Provision IAPs + subscriptions in App Store Connect (idempotent, raw REST)"
+  lane :iaps do
+    asc_key
+    require 'spaceship'
+    require_relative '../tools/asc_iaps'
+    ASCIaps.run!
   end
 
   desc "Push only screenshots (no metadata, no review info)"
