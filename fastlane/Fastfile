@@ -234,6 +234,74 @@ platform :ios do
     ASCIaps.run!
   end
 
+  desc "Push App Privacy nutrition labels (Data Not Collected) via cookie-auth iris"
+  lane :privacy do
+    upload_app_privacy_details_to_app_store(
+      username: APPLE_ID,
+      team_id: TEAM_ID,
+      app_identifier: BUNDLE_ID,
+      json_path: "fastlane/app_privacy_details.json",
+      skip_json_file_saving: true
+    )
+  end
+
+  desc "Attach latest processed build to v1.0 and submit for App Review"
+  lane :submit do
+    api_key = asc_key
+    require 'spaceship'
+    Spaceship::ConnectAPI.token = Spaceship::ConnectAPI::Token.create(
+      key_id: ASC_KEY_ID,
+      issuer_id: ASC_ISSUER_ID,
+      filepath: ASC_KEY_PATH
+    )
+
+    app = Spaceship::ConnectAPI::App.find(BUNDLE_ID)
+    UI.user_error!("App not found") unless app
+
+    UI.message("Waiting for a VALID build on TestFlight...")
+    valid_build = nil
+    300.times do |i|
+      builds = app.get_builds(limit: 5)
+      valid_build = builds.find { |b| b.processing_state == "VALID" }
+      break if valid_build
+      newest = builds.first
+      UI.message("  [#{i}] newest v=#{newest&.version} processing=#{newest&.processing_state} — sleep 30s")
+      sleep 30
+    end
+    UI.user_error!("Timed out waiting for build processing") unless valid_build
+    UI.success("Build v=#{valid_build.version} is VALID. Attaching to v1.0...")
+
+    version = app.get_app_store_versions.find { |v| v.version_string == "1.0" }
+    UI.user_error!("v1.0 version not found") unless version
+
+    Spaceship::ConnectAPI.patch(
+      "appStoreVersions/#{version.id}/relationships/build",
+      { data: { type: "builds", id: valid_build.id } }
+    )
+    UI.success("Build attached.")
+
+    UI.message("Submitting for review...")
+    deliver(
+      api_key: api_key,
+      app_identifier: BUNDLE_ID,
+      force: true,
+      submit_for_review: true,
+      automatic_release: false,
+      skip_binary_upload: true,
+      skip_metadata: true,
+      skip_screenshots: true,
+      run_precheck_before_submit: false,
+      precheck_include_in_app_purchases: false,
+      submission_information: {
+        add_id_info_uses_idfa: false,
+        export_compliance_uses_encryption: false,
+        export_compliance_encryption_updated: false,
+        content_rights_contains_third_party_content: false
+      }
+    )
+    UI.success("Submitted for App Review.")
+  end
+
   desc "Push only screenshots (no metadata, no review info)"
   lane :upload_screens do
     api_key = asc_key
