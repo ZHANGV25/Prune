@@ -1,103 +1,117 @@
 import XCTest
 
-/// End-to-end flow on the All Photos feed.
-/// Assumes the simulator has been pre-seeded with photos (xcrun simctl addmedia).
-/// Uses launch args to skip onboarding so the test is deterministic on a clean install.
+/// End-to-end delete flow against a REAL photo library.
+///
+/// The whole point of this app is deleting photos, and that path had never been
+/// executed — the previous version of this test wrapped every step in `XCTSkip`
+/// or `if exists`, so it reported success while doing nothing.
+///
+/// Seed the simulator first (see `tools/seed_simulator_photos.sh`):
+///   xcrun simctl addmedia <device> <images...>
+///   xcrun simctl privacy <device> grant photos com.isotropic.prune
+///
+/// This test now fails loudly rather than skipping, so an unseeded simulator is
+/// reported as a broken test run instead of a green one.
 final class EndToEndTests: XCTestCase {
+
     override func setUpWithError() throws {
         continueAfterFailure = false
     }
 
-    func test_fullFlow_swipe_commit_celebrate() throws {
+    func test_realLibrary_swipeLeft_commitDelete_showsCelebration() throws {
         let app = XCUIApplication()
-        app.launchArguments += ["-UITEST_SKIP_ONBOARDING"]
+        // Opens SwipeDeckView(feedType: .recents) directly — the real PhotoKit deck,
+        // not MockDeckView. Avoids depending on home-screen layout.
+        app.launchArguments += ["-UITEST_OPEN_DECK"]
 
-        // Auto-accept any photo-library or other system alerts
         let monitor = addUIInterruptionMonitor(withDescription: "System dialog") { alert in
-            let allowButtons = ["Allow Full Access", "Allow", "OK"]
-            for title in allowButtons {
-                if alert.buttons[title].exists {
-                    alert.buttons[title].tap()
-                    return true
-                }
+            for title in ["Allow Full Access", "Allow", "OK", "Continue"] where alert.buttons[title].exists {
+                alert.buttons[title].tap()
+                return true
             }
             return false
         }
         defer { removeUIInterruptionMonitor(monitor) }
 
         app.launch()
+        app.tap()  // let the interruption monitor service any permission alert
 
-        // Step 1: home screen loaded with "Pruned" title
-        XCTAssertTrue(app.staticTexts["Pruned"].waitForExistence(timeout: 8),
-                      "Home title should appear")
-
-        // Step 2: tap "All Photos" featured card (first feed row)
-        let allPhotosCard = app.buttons.matching(identifier: "All Photos").firstMatch
-        let allPhotosText = app.staticTexts["All Photos"]
-        if allPhotosCard.exists {
-            allPhotosCard.tap()
-        } else if allPhotosText.exists {
-            allPhotosText.tap()
-        } else {
-            XCTFail("Could not find the All Photos card")
+        // The deck header shows "<n> left". Its presence proves PhotoKit returned assets.
+        let counter = app.staticTexts.matching(
+            NSPredicate(format: "label ENDSWITH %@", " left")
+        ).firstMatch
+        if !counter.waitForExistence(timeout: 30) {
+            // Dump what IS on screen so an unseeded library is distinguishable from
+            // a predicate that no longer matches the deck chrome.
+            print("=====DECK_DUMP_START=====")
+            print("staticTexts: \(app.staticTexts.allElementsBoundByIndex.map(\.label))")
+            print("buttons: \(app.buttons.allElementsBoundByIndex.map(\.label))")
+            print(app.debugDescription)
+            print("=====DECK_DUMP_END=====")
+            XCTFail("Swipe deck never loaded any photos. Seed the simulator with "
+                    + "`xcrun simctl addmedia` before running this test.")
             return
         }
-        app.tap() // trigger any interruption monitor for alerts
-        sleep(1)
 
-        // Step 3: swipe deck should appear within a few seconds
-        // We don't know the exact photo, but the counter "X left" should show up
-        let leftCounter = app.staticTexts.matching(NSPredicate(format: "label CONTAINS ' left'")).firstMatch
-        let deckAppeared = leftCounter.waitForExistence(timeout: 10)
+        let remainingBefore = Int(counter.label.components(separatedBy: " ").first ?? "") ?? 0
+        XCTAssertGreaterThan(remainingBefore, 3,
+                             "Need >3 seeded photos to exercise the flow; got \(remainingBefore)")
 
-        if !deckAppeared {
-            // Could be an empty state if sim has no photos — skip rather than fail.
-            throw XCTSkip("No photos seeded in simulator; skipping swipe test.")
+        // Queue three deletes. SwiftUI's DragGesture needs a real press-and-drag —
+        // XCUIElement.swipeLeft() on a container does not reliably drive it.
+        for _ in 0..<3 {
+            let start = app.coordinate(withNormalizedOffset: CGVector(dx: 0.78, dy: 0.45))
+            let end = app.coordinate(withNormalizedOffset: CGVector(dx: 0.12, dy: 0.45))
+            start.press(forDuration: 0.05, thenDragTo: end)
+            usleep(800_000)
         }
 
-        // Step 4: swipe left twice (delete 2 photos), then right once (keep 1)
-        let deck = app.otherElements.firstMatch
-        for _ in 0..<2 {
-            deck.swipeLeft()
-            sleep(1)
-        }
-        deck.swipeRight()
-        sleep(1)
+        // Leaving the deck surfaces the review screen.
+        // Back chevron is an SF Symbol inside a Button; its accessibility label is not
+        // dependable, so tap its position (top-left of the deck chrome).
+        app.coordinate(withNormalizedOffset: CGVector(dx: 0.12, dy: 0.125)).tap()
 
-        // Step 5: tap the back chevron to exit the deck and trigger FinishView
-        // The back button is a top-left image; tap near its coord.
-        let backButton = app.buttons.matching(NSPredicate(format: "label CONTAINS[c] 'chevron'")).firstMatch
-        if backButton.exists {
-            backButton.tap()
-        } else {
-            // Fallback: tap top-left corner
-            let coord = app.coordinate(withNormalizedOffset: CGVector(dx: 0.1, dy: 0.07))
-            coord.tap()
-        }
-        sleep(1)
-
-        // Step 6: FinishView shows "For Your Approval" with delete button
         let approval = app.staticTexts["For Your Approval"]
-        if approval.waitForExistence(timeout: 5) {
-            let deleteButton = app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Delete '")).firstMatch
-            if deleteButton.exists {
-                deleteButton.tap()
-                sleep(1)
+        XCTAssertTrue(approval.waitForExistence(timeout: 10),
+                      "Review screen did not appear after queueing 3 deletes")
 
-                // Step 7: system delete confirmation — auto-tap Delete
-                // iOS always shows a confirmation for PHPhotoLibrary.deleteAssets.
-                let systemDelete = app.alerts.firstMatch.buttons["Delete"]
-                if systemDelete.waitForExistence(timeout: 5) {
-                    systemDelete.tap()
-                    sleep(2)
-                }
+        let deleteButton = app.buttons.matching(
+            NSPredicate(format: "label BEGINSWITH %@", "Delete ")
+        ).firstMatch
+        XCTAssertTrue(deleteButton.waitForExistence(timeout: 5), "No Delete button on the review screen")
+        deleteButton.tap()
 
-                // Step 8: celebration screen
-                XCTAssertTrue(app.staticTexts["Nice work!"].waitForExistence(timeout: 8),
-                              "Celebration screen should appear after delete commits")
+        // iOS always confirms PHPhotoLibrary.deleteAssets. The confirmation is hosted
+        // by the system, not the app process, so it is NOT under `app.alerts` —
+        // it has to be reached through springboard.
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        let candidates = [
+            springboard.alerts.buttons["Delete"],
+            springboard.buttons["Delete"],
+            app.alerts.buttons["Delete"],
+            app.buttons["Delete"]
+        ]
+        var confirmed = false
+        let deadline = Date().addingTimeInterval(20)
+        while Date() < deadline && !confirmed {
+            for button in candidates where button.exists && button.isHittable {
+                button.tap()
+                confirmed = true
+                break
             }
-        } else {
-            throw XCTSkip("FinishView did not appear — possibly no deletes queued.")
+            if !confirmed { usleep(500_000) }
         }
+        if !confirmed {
+            print("=====CONFIRM_DUMP_START=====")
+            print("springboard alerts: \(springboard.alerts.allElementsBoundByIndex.map(\.label))")
+            print("springboard buttons: \(springboard.buttons.allElementsBoundByIndex.map(\.label))")
+            print("app alerts: \(app.alerts.allElementsBoundByIndex.map(\.label))")
+            print("app buttons: \(app.buttons.allElementsBoundByIndex.map(\.label))")
+            print("=====CONFIRM_DUMP_END=====")
+        }
+        XCTAssertTrue(confirmed, "Could not find the system delete confirmation")
+
+        XCTAssertTrue(app.staticTexts["Nice work!"].waitForExistence(timeout: 20),
+                      "Celebration screen did not appear, so the delete never committed")
     }
 }
